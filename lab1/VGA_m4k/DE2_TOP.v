@@ -289,8 +289,8 @@ reg [3:0] state;	//state machine
 reg [30:0] x_rand;	//shift registers for random number gen  
 reg [28:0] y_rand;
 wire seed_low_bit, x_low_bit, y_low_bit; //rand low bits for SR
-reg [9:0] x_walker; //particle coords of random walker
-reg [8:0] y_walker;
+reg [9:0] x_currentPx; //particle coords of current pixel
+reg [8:0] y_currentPx;
 reg [3:0] sum; //neighbor sum
 
 assign LEDG = sum;
@@ -346,15 +346,11 @@ assign y_low_bit = y_rand[26] ^ y_rand[28];
 reg	 [7:0]	switchReg;
 reg            modeSwitch; //we are using switch 17 for this
 
-reg    [639:0] prevLine;
-reg    [639:0] currentLine;
-reg    [8:0]   lineNumber;
-
-
+reg    [2:0]   upperThreePx;
 
 //state names
-parameter S0=4'd0, test1=4'd1, test2=4'd2, test3=4'd3, test4=4'd4, test5=4'd5, test6=4'd6, 
-	draw_walker=4'd7, update_walker=4'd8, new_walker=4'd9,
+parameter init=4'd0, test1=4'd1, test2=4'd2, test3=4'd3, test4=4'd4, test5=4'd5, test6=4'd6, 
+	draw_walker=4'd7, update_walker=4'd8,
 	init1=4'd10, init2=4'd11, draw_walker1=4'd12, draw_walker2=4'd13 ;
 always @ (negedge VGA_CTRL_CLK)
 begin
@@ -373,9 +369,22 @@ begin
 		//clear the screen
 		addr_reg <= {Coord_X[9:0],Coord_Y[8:0]} ;	// [17:0]
 		we <= 1'b1;								//write some memory
-		data_reg <= 1'b0;						//write all zeros (black)		
-
-		state <= S0;	//first state in regular state machine 
+		data_reg <= 1'b0;						//write all zeros (black)
+		
+		//init random number generators to alternating bits
+		x_rand <= 31'h55555555;
+		y_rand <= 29'h55555555;
+		
+		//init current pixel to beginning of second line
+		x_currentPx <= 10'd1;
+		y_currentPx <= 9'd1;
+		
+		//assign rule based on switches
+		switchReg <= {SW[7],SW[6],SW[5],SW[4],SW[3],SW[2],SW[1],SW[0]};
+		//get the mode
+		modeSwitch <= SW[17];
+		
+		state <= init;	//first state in regular state machine 
 	end
 	
 	//begin state machine to modify display 
@@ -384,29 +393,10 @@ begin
 		case(state)
 			
 			// next three states write the inital dot
-			S0: //write a single dot in the middle of the screen
+			init: //write a single dot in the middle of the screen
 			begin
-			
-				//init random number generators
-				x_rand <= 31'h55555555;
-				y_rand <= 29'h55555555;
-				//init a randwalker to just left of center
-				x_walker <= 9'd300;
-				y_walker <= 9'd1;
-					
-				//assign rule based on switches
-				switchReg <= {SW[7],SW[6],SW[5],SW[4],SW[3],SW[2],SW[1],SW[0]};
-				//get the mode
-				modeSwitch <= SW[17];
-				//reset variables
-				lineNumber <= 9'b0;
-				prevLine <= 640'b0;
-				currentLine <= 640'b0;
-				
-				//draw first line
-				//TODO make this depend on SW17
 				we <= 1'b0 ;
-				addr_reg <= {10'd320,9'd240} ;	//(x,y)							
+				addr_reg <= {10'd320,9'd0} ;	//(x,y)
 				//write a white dot in the middle of the screen
 				data_reg <= 1'b1 ;
 				state <= init1 ;
@@ -414,7 +404,7 @@ begin
 			
 			init1: //delay enable 'we' to account for registering addr,data
 			begin
-				we <= 1'b1;								
+				we <= 1'b1;
 				//write a white dot in the middle of the screen
 				data_reg <= 1'b1 ;
 				state <= init2 ;
@@ -425,57 +415,64 @@ begin
 			// and set up first read
 			begin
 				we <= 1'b0;	
-				//read left neighbor
+				//read upper-left neighbor
 				// use result TWO cycles later (state==test2)
 				// -- one to load the addr reg, one to read memory
-				addr_reg <= {x_walker-10'd1,y_walker};							
+				addr_reg <= {x_currentPx - 10'd1, y_currentPx - 9'd1};							
 				state <= test1 ;
-			end	
+			end
+			///// End writing the first line /////
 					
-			test1: 
+			test1:
 			begin	
-				sum <= 0; 		//init sum of neighbors
+				sum <= 0; 		//init sum of neighbors //TODO remove?
+				upperThreePx <= 0; //init upper 3 pixel values
 				we <= 1'b0; 	//no memory write 
-				//read right neighbor 
-				addr_reg <= {x_walker+10'd1,y_walker};
+				//read upper-right neighbor 
+				addr_reg <= {x_currentPx + 10'd1, y_currentPx - 9'd1};
 				state <= test2 ;			
 			end
 			
 			test2: 
 			begin				
 				we <= 1'b0; //no memory write 
-				sum <= sum + {3'b0, state_bit};	//use left neighbor
+				//sum <= sum + {3'b0, state_bit};	
+				upperThreePx <= upperThreePx | {state_bit, 2'b0}; //use upper-left neighbor
 				//read upper neighbor 
-				addr_reg <= {x_walker,y_walker - 9'd1};
+				addr_reg <= {x_currentPx,y_currentPx - 9'd1};
 				state <= test3 ;	
 			end
 			
 			test3:  
 			begin
 				we <= 1'b0; //no memory write 
-				sum <= sum + {3'b0, state_bit}; //use right neighbor
-				//read lower neighbor 
-				addr_reg <= {x_walker,y_walker + 9'd1};
+				//sum <= sum + {3'b0, state_bit}; 
+				upperThreePx <= upperThreePx | {2'b0, state_bit}; //use upper-right neighbor
+				//read lower neighbor TODO remove
+				//addr_reg <= {x_currentPx,y_currentPx + 9'd1};
 				state <= test4 ;							
 			end
 			
 			test4: 
 			begin
 				we <= 1'b0; //no memory write 
-				sum <= sum + {3'b0, state_bit}; // use upper neighbor
+				//sum <= sum + {3'b0, state_bit}; 
+				upperThreePx <= upperThreePx | {1'b0, state_bit, 1'b0}; //use upper neighbor
 				state <= test5 ;							
 			end
 			
-			test5: 
+			test5: //TODO remove?
 			begin
 				we <= 1'b0; //no memory write 
-				sum <= sum + {3'b0, state_bit} ; // use lower neighbor
+				//sum <= sum + {3'b0, state_bit} ; // use lower neighbor
 				state <= test6 ;
 			end	
 			
 			test6:
 			begin
-				if (sum>0) // then there is one or more neighbors
+				
+				//if (sum>0) // then there is one or more neighbors
+				if (upperThreePx == 3'b100) //TODO
 				begin
 					state <= draw_walker;
 				end
@@ -486,7 +483,7 @@ begin
 			// the next three states draw the walker in memory
 			draw_walker: //draw the walker
 			begin
-				addr_reg <= {x_walker,y_walker};
+				addr_reg <= {x_currentPx,y_currentPx};
 				data_reg <= 1'b1 ;
 				state <= draw_walker1 ;	
 			end
@@ -500,53 +497,24 @@ begin
 			draw_walker2:
 			begin
 				we <= 1'b0; // finish memory write 
-				state <= new_walker ;
+				state <= init2 ;
 			end		
 			
 			update_walker: //update the walker
 			begin
 				we <= 1'b0; //no mem write
 				//inc/dec x while staying on screen
-				if (x_walker<10'd632 & x_rand[30]==1)
-					x_walker <= x_walker+1;
-				else if (x_walker>10'd4 & x_rand[30]==0)
-					x_walker <= x_walker-1;
-				//inc/dec y while staying on screen
-				if (y_walker<9'd472 & y_rand[28]==1)
-					y_walker <= y_walker+1;
-				else if (y_walker>9'd4 & y_rand[28]==0)
-					y_walker <= y_walker-1;
-				//update the x,y random number gens
-				x_rand <= {x_rand[29:0], x_low_bit} ;
-				y_rand <= {y_rand[27:0], y_low_bit} ;
+				if (x_currentPx < 10'd632) begin
+					x_currentPx <= x_currentPx + 10'd1;
+				end
+				else begin
+					x_currentPx <= 10'd1;
+					y_currentPx <= y_currentPx + 9'd1;
+				end
+				
 				state <= init2 ;	
 			end
 			
-			new_walker: //generate a new one
-			begin
-				we <= 1'b0; // no memory write
-				//init randwalker x
-				if (x_rand[30])
-				begin
-					x_walker <= {1'b0,x_rand[29:21]}+10'd50;
-					if (y_rand[28])
-						y_walker <= 9'd472;
-					else
-						y_walker <= 9'd4;
-				end
-				else
-				begin
-					y_walker <= {1'b0,x_rand[29:22]}+9'd50;
-					if (y_rand[28])
-						x_walker <= 10'd632;
-					else
-						x_walker <= 10'd4;
-				end
-				//update the x,y random number gens
-				x_rand <= {x_rand[29:0], x_low_bit} ;
-				y_rand <= {y_rand[27:0], y_low_bit} ;
-				state <= init2;
-			end
 		endcase
 	end // else if ( KEY[3]) 
 	
