@@ -1,5 +1,5 @@
 Flow report for test
-Fri Jan 30 15:09:23 2015
+Fri Jan 30 15:49:59 2015
 Quartus II 64-Bit Version 11.0 Build 157 04/27/2011 SJ Full Version
 
 
@@ -38,17 +38,17 @@ applicable agreement for further details.
 +--------------------------------------------------------------------------------+
 ; Flow Summary                                                                   ;
 +------------------------------------+-------------------------------------------+
-; Flow Status                        ; Successful - Fri Jan 30 15:09:23 2015     ;
+; Flow Status                        ; Successful - Fri Jan 30 15:49:59 2015     ;
 ; Quartus II 64-Bit Version          ; 11.0 Build 157 04/27/2011 SJ Full Version ;
 ; Revision Name                      ; test                                      ;
 ; Top-level Entity Name              ; DE2_Default                               ;
 ; Family                             ; Cyclone II                                ;
 ; Device                             ; EP2C35F672C6                              ;
 ; Timing Models                      ; Final                                     ;
-; Total logic elements               ; 147 / 33,216 ( < 1 % )                    ;
-;     Total combinational functions  ; 127 / 33,216 ( < 1 % )                    ;
-;     Dedicated logic registers      ; 96 / 33,216 ( < 1 % )                     ;
-; Total registers                    ; 96                                        ;
+; Total logic elements               ; 348 / 33,216 ( 1 % )                      ;
+;     Total combinational functions  ; 341 / 33,216 ( 1 % )                      ;
+;     Dedicated logic registers      ; 190 / 33,216 ( 1 % )                      ;
+; Total registers                    ; 190                                       ;
 ; Total pins                         ; 425 / 475 ( 89 % )                        ;
 ; Total virtual pins                 ; 0                                         ;
 ; Total memory bits                  ; 0 / 483,840 ( 0 % )                       ;
@@ -62,7 +62,7 @@ applicable agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 01/30/2015 15:09:09 ;
+; Start date & time ; 01/30/2015 15:49:45 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; test                ;
 +-------------------+---------------------+
@@ -73,7 +73,7 @@ applicable agreement for further details.
 +-------------------------------------+---------------------------------------+---------------+-------------+------------+
 ; Assignment Name                     ; Value                                 ; Default Value ; Entity Name ; Section Id ;
 +-------------------------------------+---------------------------------------+---------------+-------------+------------+
-; COMPILER_SIGNATURE_ID               ; 132683363430515.142264854904528       ; --            ; --          ; --         ;
+; COMPILER_SIGNATURE_ID               ; 132683363430515.142265098400116       ; --            ; --          ; --         ;
 ; MAX_CORE_JUNCTION_TEMP              ; 85                                    ; --            ; --          ; --         ;
 ; MIN_CORE_JUNCTION_TEMP              ; 0                                     ; --            ; --          ; --         ;
 ; PARTITION_COLOR                     ; 16764057                              ; --            ; DE2_Default ; Top        ;
@@ -90,11 +90,11 @@ applicable agreement for further details.
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name               ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis      ; 00:00:02     ; 1.0                     ; 360 MB              ; 00:00:02                           ;
-; Fitter                    ; 00:00:07     ; 2.0                     ; 520 MB              ; 00:00:08                           ;
-; TimeQuest Timing Analyzer ; 00:00:02     ; 1.7                     ; 388 MB              ; 00:00:02                           ;
-; Assembler                 ; 00:00:03     ; 1.0                     ; 380 MB              ; 00:00:02                           ;
-; Total                     ; 00:00:14     ; --                      ; --                  ; 00:00:14                           ;
+; Analysis & Synthesis      ; 00:00:03     ; 1.0                     ; 360 MB              ; 00:00:02                           ;
+; Fitter                    ; 00:00:07     ; 1.9                     ; 521 MB              ; 00:00:09                           ;
+; TimeQuest Timing Analyzer ; 00:00:02     ; 1.0                     ; 391 MB              ; 00:00:02                           ;
+; Assembler                 ; 00:00:02     ; 1.0                     ; 380 MB              ; 00:00:02                           ;
+; Total                     ; 00:00:14     ; --                      ; --                  ; 00:00:15                           ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 

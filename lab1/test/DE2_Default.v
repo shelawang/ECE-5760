@@ -368,13 +368,11 @@ VGA_Controller		u1	(	//	Host Side
 							.iRST_N(DLY_RST)	);
 
 
-reg  addr_reg_lsb;
-							
 // SRAM_control
 assign SRAM_ADDR = addr_reg;
 assign SRAM_DQ = (we)? 16'hzzzz : data_reg ;
-assign SRAM_UB_N = addr_reg_lsb;		// hi byte select depends on SRAM addr LSB
-assign SRAM_LB_N = ~addr_reg_lsb;	// lo byte select depends on SRAM addr LSB
+assign SRAM_UB_N = 0;					// hi byte select enabled
+assign SRAM_LB_N = 0;					// lo byte select enabled
 assign SRAM_CE_N = 0;					// chip is enabled
 assign SRAM_WE_N = we;					// write when ZERO
 assign SRAM_OE_N = 0;					//output enable is overidden by WE
@@ -411,7 +409,7 @@ begin
 	if (reset)		//synch reset assumes KEY0 is held down 1/60 second
 	begin
 		//clear the screen
-		addr_reg <= {Coord_X[9:0],Coord_Y[9:0]} ;	// [17:0]
+		addr_reg <= {Coord_X[9:1],Coord_Y[9:1]} ;	// [17:0]
 		we <= 1'b0;								//write some memory
 		data_reg <= 16'b0;						//write all zeros (black)		
 		//init random number generators
@@ -443,11 +441,110 @@ begin
 				we <= 1'b0;								
 				//write a white dot in the middle of the screen
 				data_reg <= 16'hFFFF ;
-				//state <= test1 ;
-				state <= init;
+				state <= test1 ;
+
 			end			
+					
+			test1: //read left neighbor
+			begin	
+				lock <= 1'b1; 	//set the interlock to detect end of sync interval
+				sum <= 0; 		//init sum of neighbors
+				we <= 1'b1; 	//no memory write 
+				//read  left neighbor 
+				addr_reg <= {x_walker-9'd1,y_walker};
+				state <= test2 ;			
+			end
 			
-		
+			test2: //check left neighbor and read right neighbor 
+			begin				
+				we <= 1'b1; //no memory write 
+				sum <= sum + {3'b0, SRAM_DQ[15]};	
+				//read right neighbor 
+				addr_reg <= {x_walker+9'd1,y_walker};
+				state <= test3 ;	
+			end
+			
+			test3: //check right neighbor and read upper neighbor 
+			begin
+				we <= 1'b1; //no memory write 
+				sum <= sum + {3'b0, SRAM_DQ[15]};
+				//read upper neighbor 
+				addr_reg <= {x_walker,y_walker - 9'd1};
+				state <= test4 ;							
+			end
+			
+			test4: //check upper neighbor and read lower neighbor 
+			begin
+				we <= 1'b1; //no memory write 
+				sum <= sum + {3'b0, SRAM_DQ[15]};
+				//read lower neighbor 
+				addr_reg <= {x_walker,y_walker + 9'd1};
+				state <= test5 ;							
+			end
+			
+			test5: //check lower neighbor
+			begin
+				we <= 1'b1; //no memory write 
+				sum <= sum + {3'b0, SRAM_DQ[15]} ;
+				state <= test6 ;
+				led <= sum;
+			end	
+			
+			test6:
+			begin
+				if (lock & sum>0) // then there is a neighbor
+				begin
+					state <= draw_walker;
+				end
+				else // if get here, then no neighbors, so update position
+					state <= update_walker; 
+			end
+			
+			draw_walker: //draw the walker
+			begin
+				we <= 1'b0; // memory write 
+				addr_reg <= {x_walker,y_walker};
+				data_reg <= 16'hFFFF ;
+				state <= new_walker ;	
+			end
+			
+			update_walker: //update the walker
+			begin
+				we <= 1'b1; //no mem write
+				//inc/dec x while staying on screen
+				if (x_walker<9'd318 & x_rand[30]==1)
+					x_walker <= x_walker+1;
+				else if (x_walker>9'd2 & x_rand[30]==0)
+					x_walker <= x_walker-1;
+				//inc/dec y while staying on screen
+				if (y_walker<9'd237 & y_rand[28]==1)
+					y_walker <= y_walker+1;
+				else if (y_walker>9'd2 & y_rand[28]==0)
+					y_walker <= y_walker-1;
+				//update the x,y random number gens
+				x_rand <= {x_rand[29:0], x_low_bit} ;
+				y_rand <= {y_rand[27:0], y_low_bit} ;
+				state <= test1 ;	
+			end
+			
+			new_walker: //generate a new one
+			begin
+				we <= 1'b1; // no memory write
+				//init randwalker x
+				if (x_rand[30])
+					x_walker <= 9'd318;
+				else
+					x_walker <= 9'd2;
+				//init randwalker y
+				if (y_rand[28])
+					y_walker <= 9'd238;
+				else
+					y_walker <= 9'd2;
+				//update the x,y random number gens
+				x_rand <= {x_rand[29:0], x_low_bit} ;
+				y_rand <= {y_rand[27:0], y_low_bit} ;
+				state <= test1;
+			end
 		endcase
 	end
 	
@@ -457,7 +554,6 @@ begin
 	begin
 		lock <= 1'b0; //clear lock if display starts because this destroys mem addr_reg
 		addr_reg <= {Coord_X[9:1],Coord_Y[9:1]} ;
-		addr_reg_lsb <= Coord_X[0];
 		we <= 1'b1;
 	end
 end

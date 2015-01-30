@@ -313,7 +313,7 @@ VGA_G[9]                     : D12       : output : 3.3-V LVTTL       :         
 CLOCK_27                     : D13       : input  : 3.3-V LVTTL       :         : 3         : Y              
 TCK                          : D14       : input  : 3.3-V LVTTL       :         : 4         : Y              
 GND*                         : D15       :        :                   :         : 4         :                
-IRDA_TXD                     : D16       : output : 3.3-V LVTTL       :         : 4         : N              
+GND*                         : D16       :        :                   :         : 4         :                
 ENET_DATA[0]                 : D17       : bidir  : 3.3-V LVTTL       :         : 4         : Y              
 ENET_DATA[15]                : D18       : bidir  : 3.3-V LVTTL       :         : 4         : Y              
 ENET_DATA[11]                : D19       : bidir  : 3.3-V LVTTL       :         : 4         : Y              
@@ -393,7 +393,7 @@ GND*                         : G14       :        :                   :         
 GND*                         : G15       :        :                   :         : 4         :                
 GND*                         : G16       :        :                   :         : 4         :                
 GND*                         : G17       :        :                   :         : 4         :                
-GND*                         : G18       :        :                   :         : 4         :                
+IRDA_TXD                     : G18       : output : 3.3-V LVTTL       :         : 4         : N              
 VCCA_PLL2                    : G19       : power  :                   : 1.2V    :           :                
 GND_PLL2                     : G20       : gnd    :                   :         :           :                
 GND*                         : G21       :        :                   :         : 5         :                
