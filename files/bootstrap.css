@@ -91,7 +91,11 @@ svg:not(:root) {
   overflow: hidden;
 }
 figure {
+  text-align: center;
   margin: 1em 40px;
+}
+figcaption{
+  font-size: smaller;
 }
 hr {
   height: 0;
