@@ -21,7 +21,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#top">Re-inventing the PC</a>
+      <a class="navbar-brand" href="#top">Command Line Interface</a>
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
@@ -196,13 +196,74 @@ power (exponential) function is implemented using multiplication.
     }
   }
 </xmp>
+<b>print_array</b>: <i>printing an array to vga</i>
+<xmp>pseudo-code:
+  print_array(int[] array, int array_len)
+  {
+    for (int i = 0; i < array_len; i++)
+    {
+      // convert each array number to ascii
+      char = toASCII(array[i]);
 
-    <li><i>print_array</i>: printing an array to vga</li>
-    <li><i>max</i>: return the max of an array</li>
-    <li><i>min</i>: return the min of an array</li>
-    <li><i>reverse</i>: reverse an array</li>
+      // print to a specific location on the vga screen
+      vga_putchar(char);
+    }
+  }
+</xmp>
 
+<b>max</b>: <i>return the max of an array</i>
+<xmp>pseudo-code:
+  max(int[] array, int array_len)
+  {
+    // traverse through the array and return the largest number
 
+    max = array[0];
+
+    for (int i = 1; i < array_len; i++)
+    {
+      if (array[i] > max)
+        max = array[i];
+    }
+    return max;
+  }
+</xmp>
+
+<b>min</b>: <i>return the min of an array</i>
+<xmp>pseudo-code:
+  max(int[] array, int array_len)
+  {
+    // traverse through the array and return the largest number
+
+    min = array[0];
+
+    for (int i = 1; i < array_len; i++)
+    {
+      if (array[i] < min)
+        min = array[i];
+    }
+    return min;
+  }
+</xmp>
+
+<b>reverse</b>: <i>reverse an array</i>
+<xmp>pseudo-code:
+  reverse(int[] array, int array_len)
+  {
+    // forward index traverse the array from the beginning to the end
+    forw_idx = 0;
+    // backward index traverse the array from the end to the beginning
+    back_idx = array_len;
+
+    // if forw_idx is greater than back_idx that means we have already
+    // traversed and swapped every element in the array
+    while(forw_idx < back_idx)
+    {
+      swap(array[forw_idx], array[back_idx]);
+    }
+
+  }
+
+</xmp>
 
 </p>
 
