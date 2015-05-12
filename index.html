@@ -184,7 +184,7 @@ power (exponential) function is implemented using multiplication.
     // In bubble sort, we traverse the array from the first element to the last
     // array index and compare each neighbouring elements. The current element
     // is swapped with the next element if the next element is larger
-      
+
     for(int i=0; i < n; i++)
     {
       for(int j=1; j < (n-i); j++)
@@ -193,7 +193,7 @@ power (exponential) function is implemented using multiplication.
         {
           swap(array[j-1], array[j]);
         }
-                         
+
       }
     }
   }
@@ -270,20 +270,20 @@ power (exponential) function is implemented using multiplication.
 In addition to those functions that could become an extension to the pancake programming
 language library. We have also implemented functions that are specific to our project.
   <ul>
-    <li><i>calculator           </i>: interactive calculator through the command line.</li>                   
-    <li><i>clear_screen         </i>: clear the content on the command line screen and start the cursor from the top of the screen    </li>            
-    <li><i>clear_buffer         </i>: clear the buffer of line that the cursor is on. </li>               
-    <li><i>new_arr              </i>: creating a new array and store it in memory</li>             
+    <li><i>calculator           </i>: interactive calculator through the command line.</li>
+    <li><i>clear_screen         </i>: clear the content on the command line screen and start the cursor from the top of the screen    </li>
+    <li><i>clear_buffer         </i>: clear the buffer of line that the cursor is on. </li>
+    <li><i>new_arr              </i>: creating a new array and store it in memory</li>
     <li><i>cp                   </i>: copy the array that read from the SD card to the memory</li>
-    <li><i>type_character       </i>: interprets a key pressed on the keyboard </li> 
-    <li><i>type_character_helper</i>: displays a character on the VGA and adds it to the character buffer. </li>                     
-    <li><i>draw_rectangle       </i>: draw a rectangle on the VGA, used to draw the blinking red cursor</li>              
-    <li><i>parse_file_cmd       </i>: implements the command <i>ls</i>, which reveals what files are on the SD card </li>              
-    <li><i>read_sd              </i>: read the content of a file contained on the SD card into the memory</li>       
-    <li><i>read_byte_sd         </i>: read a single byte from the SD card at a specific address</li>            
-    <li><i>write_sd             </i>: create and write a file to the SD card</li>        
-    <li><i>write_byte_sd        </i>: write a single byte to the SD card at a specific address</li>             
-  
+    <li><i>type_character       </i>: interprets a key pressed on the keyboard </li>
+    <li><i>type_character_helper</i>: displays a character on the VGA and adds it to the character buffer. </li>
+    <li><i>draw_rectangle       </i>: draw a rectangle on the VGA, used to draw the blinking red cursor</li>
+    <li><i>parse_file_cmd       </i>: implements the command <i>ls</i>, which reveals what files are on the SD card </li>
+    <li><i>read_sd              </i>: read the content of a file contained on the SD card into the memory</li>
+    <li><i>read_byte_sd         </i>: read a single byte from the SD card at a specific address</li>
+    <li><i>write_sd             </i>: create and write a file to the SD card</li>
+    <li><i>write_byte_sd        </i>: write a single byte to the SD card at a specific address</li>
+
   </ul>
   <h4>Calculator</h4>
   The interactive command line calculator implements a FSM to interpret the commands from the user.                 
@@ -385,7 +385,125 @@ TODO talk about how the script works and how to use it
 <p>Using a Verilog implementation of an SD card controller that we discovered online (see <a href="#references">References</a>), we were able to passably read and write an SD card using only Verilog (i.e., without using Nios II).</p>
 <p>It is worth noting that in our implementation, a single "write" to the SD card in fact writes an entire 512-byte block, or "sector," of the SD card. Meanwhile, a "read" from the SD card reads the entire 512 bytes of a block but only keeps the last byte to display on the monitor. This scheme results in passable but certainly not optimal file accesses, and future work done using this SD card controller could include research into how to improve reads and writes.</p>
 <p>Also note that the SD card controller may only reliably work with SD cards with storage capacity below 2 GB, as SD cards with more than 2 GB (high-capacity cards) require a different initialization sequence that is not handled in the controller used in this project.</p>
-@Shela talk about what all the in/outputs mean of the SD controller
+
+<p>Below is a brief overview of the inputs and outputs to the SD_Card module, which acts as the SD card controller in Verilog.</p>
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:bold;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+</style>
+
+<p><b>Inputs to SD_Card module</b></p>
+<p><center><table class="tg">
+  <tr>
+    <th class="tg-031e">Port Name</th>
+    <th class="tg-031e">Bit Width</th>
+    <th class="tg-031e">Description / Notes</th>
+  </tr>
+  <tr>
+    <td class="tg-031e">iCmd</td>
+    <td class="tg-031e">2</td>
+    <td class="tg-031e">Command to SD card - read (01), write (10), or none (00)</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">iScAd</td>
+    <td class="tg-031e">32</td>
+    <td class="tg-031e">Byte address on SD card to write to or read from (depending on iCmd)</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">iWsD_DATA</td>
+    <td class="tg-031e">8</td>
+    <td class="tg-031e">Byte to write to SD card (if iCmd is "write")</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">iRST_n</td>
+    <td class="tg-031e">1</td>
+    <td class="tg-031e">Reset line - connect this to your global reset signal</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">iCLK</td>
+    <td class="tg-031e">1</td>
+    <td class="tg-031e">Clock - this module appears to be fast enough to handle 50 MHz</td>
+  </tr>
+</table></center></p>
+
+<p><b>Outputs from SD_Card module</b></p>
+<p><center>
+<table class="tg">
+  <tr>
+    <th class="tg-031e">Port Name</th>
+    <th class="tg-031e">Bit Width</th>
+    <th class="tg-031e">Description / Notes</th>
+  </tr>
+  <tr>
+    <td class="tg-031e">oCmd_Ack</td>
+    <td class="tg-031e">1</td>
+    <td class="tg-031e">Signal to upper module that read/write command was accepted</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">oBreak</td>
+    <td class="tg-031e">1</td>
+    <td class="tg-031e">Signal an input break to upper module (i.e., byte available from SD card)</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">oRsD_Data</td>
+    <td class="tg-031e">8</td>
+    <td class="tg-031e">Data byte read from SD card (if oBreak == 1)</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">oAckOutput</td>
+    <td class="tg-031e">1</td>
+    <td class="tg-031e">Signal to inform the upper module that output byte is being send to SD card</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">oRW_Ready</td>
+    <td class="tg-031e">1</td>
+    <td class="tg-031e">Signal to upper module that read/write command is processed and finished</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">oOperational</td>
+    <td class="tg-031e">1</td>
+    <td class="tg-031e">Outputs 1 when SD card is in init state/ready - after reset, this should eventually become 1 by itself; check this before proceeding with reads/writes</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">Response</td>
+    <td class="tg-031e">8</td>
+    <td class="tg-031e">SD card response byte of a write command (see <a href="#references">References</a>) for links to more details</td>
+  </tr>
+</table>
+</center></p>
+
+<p><b>SD Card Interface with DE2</b></p>
+<p><center>
+<table class="tg">
+  <tr>
+    <th class="tg-031e">Port Name</th>
+    <th class="tg-031e">Bit Width</th>
+    <th class="tg-031e">Description / Notes</th>
+  </tr>
+  <tr>
+    <td class="tg-031e">SD_DAT</td>
+    <td class="tg-031e">1</td>
+    <td class="tg-031e">SD Card Data (SPI: DO output on card) - connect to SD_DAT port on DE2</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">SD_DAT3</td>
+    <td class="tg-031e">1</td>
+    <td class="tg-031e">SD Card Data 3 (SPI: CS, chip select input on card) - connect to SD_DAT3 port on DE2</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">SD_CMD</td>
+    <td class="tg-031e">1</td>
+    <td class="tg-031e">SD Card Command Signal (SPI: DI input on card) - connect to SD_CMD port on DE2</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">SD_CLK</td>
+    <td class="tg-031e">1</td>
+    <td class="tg-031e">SD Card Clock (SPI: Clock input on card) - connect to SD_CLK port on DE2</td>
+  </tr>
+</table>
+</center></p><br/>
 
 <h5>Keyboard scan-code to ASCII look-up table</h5>
 <p></p>
