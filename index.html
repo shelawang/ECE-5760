@@ -46,7 +46,7 @@
 <h4 style="text-align:center;">Shela Wang (sw679), Victor Fei (vf63), and Richard Quan (rq32)</h4>
 
 <div class="container" id="intro">
-<h3>Introduction</h3>
+<h2>Introduction</h2>
 <p>Our project connects a VGA monitor and a keyboard to an FPGA via an Altera DE2 development board to create a system resembling a personal computer. By simulating a traditional command line interface (CLI) on the VGA screen, users can perform certain operations through the CLI. Additionally, we utilized the DE2 board's built-in SD card reader to allow users to import, manipulate, and save portable data, effectively creating a simplified file system for the FPGA.</p>
 <figure>
 <img src="files/screen.JPG" alt="Photograph of the system" align="middle" width="500">
@@ -58,30 +58,31 @@
 </div> <!-- End of Intro div -->
 
 <div class="container" id="design">
-<h3>Design</h3>
+<h2>Design</h2>
 <small><a href="#desinterface">Block Diagram</a> | <a href="#desconnections">Connections</a> | <a href="#descomm">Communication</a> | <a href="#dessound">Sound</a> | <a href="#desdiff">Difficulties &amp; Choices</a></small> <br>
 
-<br/><h4 id="desinterface">Block Diagram</h4>
+<br/><h3 id="desinterface">Block Diagram</h3>
 <p>The figure below illustrates the major components of the system. The hardware interface consists of an FPGA on the DE2 board with an SD card reader connected to a PS/2 keyboard and a VGA monitor. We use a Pancake processor running on the FPGA to interface between the software (Syrup) and hardware (Verilog) components of our design. The FPGA accepts user input via the keyboard, interprets and processes the command through Pancake, and outputs the I/O through a command line interface (CLI) displayed on the VGA, in a way reminiscent of personal computers of yore.  The SD card reader sends and receives data in the same fashion.</p>
 <figure>
 <img src="files/block_diagram.png" alt="block diagram" width="700">
 <figcaption>Block diagram of the system</figcaption>
 </figure>
 
-<br/><h4 id="desconnections">Connections</h4>
+<br/><h3 id="desconnections">Connections</h3>
 <p></p>
 
-<br/><h4 id="descomm">Communication</h4>
+<br/><h3 id="descomm">Communication</h3>
 <p>TODO: talk about things like PS/2, VGA, etc.</p>
 
 <hr>
-<br/><h4 id="dessoftware">Software</h4>
+<br/><h3 id="dessoftware">Software</h3>
 <p>
   When we started this project. The Pancake programming language came with very
   few functions. Consequently, part of our project is to extend the Pancake
   programming language library and to add many basic functions that should belong to a
   programming language. Our hope was to make the Pancake programming language friendlier
   to other users.
+  <h4>Addition to the Pancake Programming Language Library</h4>
   The functions that we could be useful to the Pancake library include:
   <ul>
     <li><i>itoa</i>: printing number to vga in decimal format</li>
@@ -263,8 +264,27 @@ power (exponential) function is implemented using multiplication.
     }
 
   }
-
 </xmp>
+
+<h4>Function Specific to the Command Line Interface </h4>
+In addition to those functions that could become an extension to the pancake programming
+language library. We have also implemented functions that are specific to our project.
+  <ul>
+    <li><i>calculator           </i>: interactive calculator through the command line.</li>                   
+    <li><i>clear_screen         </i>: clear the content on the command line screen and start the cursor from the top of the screen    </li>            
+    <li><i>clear_buffer         </i>: clear the buffer of line that the cursor is on. </li>               
+    <li><i>new_arr              </i>: creating a new array and store it in memory</li>             
+    <li><i>cp                   </i>: copy the array that read from the SD card to the memory</li>
+    <li><i>type_character       </i>: interprets a key pressed on the keyboard </li> 
+    <li><i>type_character_helper</i>: displays a character on the VGA and adds it to the character buffer. </li>                     
+    <li><i>draw_rectangle       </i>: draw a rectangle on the VGA, used to draw the blinking red cursor</li>              
+    <li><i>parse_file_cmd       </i>: implements the command <i>ls</i>, which reveals what files are on the SD card </li>              
+    <li><i>read_sd              </i>: read the content of a file contained on the SD card into the memory</li>       
+    <li><i>read_byte_sd         </i>: read a single byte from the SD card at a specific address</li>            
+    <li><i>write_sd             </i>: create and write a file to the SD card</li>        
+    <li><i>write_byte_sd        </i>: write a single byte to the SD card at a specific address</li>             
+  
+  </ul>
 
 </p>
 
