@@ -179,9 +179,11 @@
   </ul>
 <h5>Pancake compilation script</h5>
 <p></p> @Shela
+TODO talk about how the script works and how to use it
 
 <h5>SD Card controller</h5>
-<p></p>
+<p></p> @Shela
+TODO mention that SD controller only works below 2 GB
 
 <h5>Keyboard scan-code to ASCII look-up table</h5>
 <p></p>
@@ -197,8 +199,7 @@
 
 <br><h4 id="conimprovements">Possible Improvements</h4>
 <h5>Error Messages</h5>
-<p>Having meaningful error messages when a user enters an invalid command would improve the usability of our system. In our current system, if a user enters an invalid command or tries to display the contents of a file that does not exist, then the CLI simply does not output anything. In contrast, if a user enters an invalid command in Linux, for example, the CLI will display a message saying that the command was unsuccessful so that the user knows to try a different command.
-</p>
+<p>Having meaningful error messages when a user enters an invalid command would improve the usability of our system. In our current system, if a user enters an invalid command or tries to display the contents of a file that does not exist, then the CLI simply does not output anything. In contrast, if a user enters an invalid command in Linux, for example, the CLI will display a message saying that the command was unsuccessful so that the user knows to try a different command.</p>
 
 <h5>Handling Larger Numbers</h5>
 <p></p>
@@ -208,16 +209,13 @@
 <p></p> @Victor?
 
 <h5>Efficient SD Card Access</h5>
-<p></p>
-TODO mention that SD controller only works below 2 GB
+<p>In the project's current form, a single "write" to the SD card actually writes an entire 512-byte "sector" of the SD card. Thus, the storage capacity on the SD card is reduced by a factor of 512, while the time required to read and write from the card is increased by a factor of 512. Improvements to reading and writing the SD card would greatly enhance the usability of the system, because file reads and writes would be much faster, and users would have the ability to create more files.</p>
 
 <h5>Hierarchical File System</h5>
-<p></p>
-
-<h5>Mouse</h5>
-<p></p>
+<p>Customizable file names and the ability to create and navigate between directories would make our file system seem more like that of a regular computer. A real bonus would be to implement FAT32-style reading and writing so that files could even be transfered between the FPGA and other computers with SD card slots.</p>
 
 </div> <!-- end of Conclusions div -->
+
 
 <div class="container" id="appendix">
 <h3>Appendix</h3>
