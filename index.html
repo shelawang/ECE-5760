@@ -123,7 +123,7 @@
 
     print_to_vga(char_array);
 
-  }  
+  }
 </xmp>
 <b>mod</b>: <i>modular operation</i><br>
 The modular function is implemented using subtractions. This algorithm
@@ -217,6 +217,7 @@ power (exponential) function is implemented using multiplication.
 
 <h5>File System</h5>
 <p></p>
+@Shela talk about valid bytes/bits
 
 <br/><h4 id="deshardware">Hardware</h4>
 <p></p>
@@ -277,9 +278,11 @@ power (exponential) function is implemented using multiplication.
 
 <br><h4 id="confeatures">Useful Features</h4>
 
+<p>This section lists some of the features that we implemented for this project, which we believe may be useful for future students working with the Pancake stack CPU, an SD card, or a PS/2 keyboard on the DE2 development board.</p>
+
 <h5>New Pancake functions</h5>
 <p>@Victor: Discuss new functions</p>
-  <ul> negative numbers
+  <ul>
   <li>
   </ul>
 <h5>Pancake compilation script</h5>
@@ -287,15 +290,17 @@ power (exponential) function is implemented using multiplication.
 TODO talk about how the script works and how to use it
 
 <h5>SD Card controller</h5>
-<p></p> @Shela
-TODO mention that SD controller only works below 2 GB
+<p>Using a Verilog implementation of an SD card controller that we discovered online (see <a href="#references">References</a>), we were able to passably read and write an SD card using only Verilog (i.e., without using Nios II).</p>
+<p>It is worth noting that in our implementation, a single "write" to the SD card in fact writes an entire 512-byte block, or "sector," of the SD card. Meanwhile, a "read" from the SD card reads the entire 512 bytes of a block but only keeps the last byte to display on the monitor. This scheme results in passable but certainly not optimal file accesses, and future work done using this SD card controller could include research into how to improve reads and writes.</p>
+<p>Also note that the SD card controller may only reliably work with SD cards with storage capacity below 2 GB, as SD cards with more than 2 GB (high-capacity cards) require a different initialization sequence that is not handled in the controller used in this project.</p>
+@Shela talk about what all the in/outputs mean of the SD controller
 
 <h5>Keyboard scan-code to ASCII look-up table</h5>
 <p></p>
 
 
 <br><h4 id="constandards">Conformity to Standards</h4>
-<p></p>
+<p></p> @Richard?
 
 <br><h4 id="conconsiderations">Legal and Ethical Considerations</h4>
 <p>In developing this project, we followed the IEEE Code of Ethics, being careful in the development of our project to engineer our product in a responsible manner. We investigated the possible safety concerns that could come along with this project, and determined fully that our project would be safe even if accidents were to occur. We minimized risk in order to be consistent with public safety and welfare in mind.</p>
@@ -309,6 +314,9 @@ TODO mention that SD controller only works below 2 GB
 <h5>Handling Larger Numbers</h5>
 <p></p>
 [i.e., calculations with larger numbers] @Victor
+
+<h5>Handling Negative Numbers</h5>
+<p></p> @Victor
 
 <h5>Interpreter</h5>
 <p></p> @Victor?
@@ -336,7 +344,7 @@ TODO
 </ul></p>
 <p>All of the parts used for this project (except for the SD card) were borrowed from Bruce Land's lab.</p>
 
-<br><h4>References</h4>
+<br><h4 id="references">References</h4>
 <p><ul>
 <li>PS/2 Keyboard Controller from Skyler Schneider's <a href="http://people.ece.cornell.edu/land/courses/ece5760/FinalProjects/f2010/ss868/ss868/index.html" target="_blank">"Falling Sand Game"</a>, ECE 4750 Fall 2010
 <li>Information on the <a href="http://elm-chan.org/docs/mmc/mmc_e.html" target="_blank">SD card communication protocol</a>
