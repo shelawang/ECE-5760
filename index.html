@@ -48,7 +48,7 @@
 <h3>Introduction</h3>
 <p>Our project connects a VGA monitor and a keyboard to an FPGA via an Altera DE2 development board to create a system resembling a personal computer. By simulating a traditional command line interface (CLI) on the VGA screen, users can perform certain operations through the CLI. Additionally, we utilized the DE2 board's built-in SD card reader to allow users to import, manipulate, and save portable data, effectively creating a simplified file system for the FPGA.</p>
 <figure>
-<img src="files/screen.jpg" alt="Photograph of the system" align="middle" width="500">
+<img src="files/screen.JPG" alt="Photograph of the system" align="middle" width="500">
 <figcaption>A photograph of the system.</figcaption>
 </figure>
 
@@ -61,7 +61,7 @@
 <small><a href="#desinterface">Block Diagram</a> | <a href="#desconnections">Connections</a> | <a href="#descomm">Communication</a> | <a href="#dessound">Sound</a> | <a href="#desdiff">Difficulties &amp; Choices</a></small> <br>
 
 <br/><h4 id="desinterface">Block Diagram</h4>
-<p>The figure below illustrates the major components of the system. The hardware interface consists of an FPGA on the DE2 board with an SD card reader connected to a PS2 keyboard and a VGA monitor. We use a Pancake processor running on the FPGA to interface between the software (Syrup) and hardware (Verilog) components of our design. The FPGA accepts user input via the keyboard, interprets and processes the command through Pancake, and outputs the I/O through a command line interface (CLI) displayed on the VGA, in a way reminiscent of personal computers of yore.  The SD card reader sends and receives data in the same fashion.</p>
+<p>The figure below illustrates the major components of the system. The hardware interface consists of an FPGA on the DE2 board with an SD card reader connected to a PS/2 keyboard and a VGA monitor. We use a Pancake processor running on the FPGA to interface between the software (Syrup) and hardware (Verilog) components of our design. The FPGA accepts user input via the keyboard, interprets and processes the command through Pancake, and outputs the I/O through a command line interface (CLI) displayed on the VGA, in a way reminiscent of personal computers of yore.  The SD card reader sends and receives data in the same fashion.</p>
 <figure>
 <img src="files/block_diagram.png" alt="block diagram" width="700">
 <figcaption>Block diagram of the system</figcaption>
@@ -71,7 +71,7 @@
 <p></p>
 
 <br/><h4 id="descomm">Communication</h4>
-<p>TODO: talk about things like PS2, VGA, etc.</p>
+<p>TODO: talk about things like PS/2, VGA, etc.</p>
 
 <hr>
 <br/><h4 id="dessoftware">Software</h4>
@@ -146,6 +146,7 @@
 
 <br><h4 id="resspeed">Speed and Accuracy</h4>
 
+
 <h5>Calculations</h5>
 <p></p>
 
@@ -156,7 +157,9 @@
 <p>Our system has no moving parts and consists solely of a DE2 development board, keyboard, VGA monitor, and SD card. These components are fairly familiar to the typical user, and we therefore do not foresee using our system as being any more dangerous than using a regular personal computer.</p>
 
 <br><h4 id="resusability">Usability</h4>
-<p></p>
+<p>The system is usable and fun to use as a command line interface. For most commands, such as the calculator and array functions, there is no no perceivable delay between when the user enters the command when the response is displayed on the screen.</p>
+<p>On the other hand, because of the way that we implemented the file system, most of the file-related commands, such as ls (list files), mk (make new file), and cat (show file contents), can take a second or two to complete.</p>
+<p>A feature that would improve the usability of the system would be error messages. For example, if a user tries to show the contents of a file that does not exist, then the system would show on the screen that no such file exists. In the system's current state, the user does not receive any indication when a command or file name is not valid.</p>
 
 </div> <!-- end of Results div -->
 
@@ -197,6 +200,17 @@
 <p>Finally, we have sought to improve understanding of technology through our project. We make all of the information available to the public in order to encourage others to build similar products if they are interested. This project is a good example of how computers were built from the ground up, and we hope that this reaches those who have similar interests and want to build similar systems.</p>
 
 <br><h4 id="conimprovements">Possible Improvements</h4>
+<h5>Error Messages</h5>
+<p></p>
+
+<h5>Calculations with Larger Numbers</h5>
+<p></p>
+
+<h5>More Efficient SD Card Access</h5>
+<p></p>
+TODO mention that SD controller only works below 2 GB
+
+<h5>Mouse</h5>
 <p></p>
 
 </div> <!-- end of Conclusions div -->
@@ -204,14 +218,37 @@
 <div class="container" id="appendix">
 <h3>Appendix</h3>
 <br><h4>Code</h4>
+TODO
+
+<br><h4>Parts List</h4>
+<p><ul>
+  <li>Altera DE2 Development Board
+  <li>VGA Monitor
+  <li>PS/2 Keyboard
+  <li>32 MB SD Card
+</ul></p>
+<p>All of the parts used for this project (except for the SD card) were borrowed from Bruce Land's lab.</p>
 
 <br><h4>References</h4>
-<p>PS2 Keyboard Controller adapted from Skyler Schneider's <a href="http://people.ece.cornell.edu/land/courses/ece5760/FinalProjects/f2010/ss868/ss868/index.html" target="_blank">"Falling Sand Game"</a>, ECE 4750 Fall 2010</p>
-<p>Information on <a href="http://elm-chan.org/docs/mmc/mmc_e.html" target="_blank">SD card communication protocol</a></p>
-<p><a href="http://people.ece.cornell.edu/land/courses/ece5760/DE2/Stack_cpu.html">Pancake Stack CPU</a></p>
+<p><ul>
+<li>PS/2 Keyboard Controller from Skyler Schneider's <a href="http://people.ece.cornell.edu/land/courses/ece5760/FinalProjects/f2010/ss868/ss868/index.html" target="_blank">"Falling Sand Game"</a>, ECE 4750 Fall 2010
+<li>Information on the <a href="http://elm-chan.org/docs/mmc/mmc_e.html" target="_blank">SD card communication protocol</a>
+<li><a href="http://alumni.cs.ucr.edu/~amitra/sdcard/Additional/sdcard_appnote_foust.pdf" target="_blank">Further information on SD cards</a> by F. Foust at Michigan State University
+<li>Information on <a href="http://www.chlazza.net/sdcardinfo.html" target="_blank">SD card responses</a>
+<li><a href="http://people.ece.cornell.edu/land/courses/ece5760/DE2/Stack_cpu.html" target="_blank">Pancake Stack CPU</a> on the ECE 5760 webpage
+<li><a href="http://mh-nexus.de/en/hxd/" target="_blank">HxD - Freeware Hex and Disk Editor</a> &mdash; a very important tool for making projects with SD cards
+<li>SD Card Controller from Theo Engel's <a href="http://www.theoengel.nl/P8/index.html" target="_blank">P856 Minicomputer</a> project
+  <ul>
+  <li>The Verilog for the SD card controller is in <a href="http://www.theoengel.nl/ddpx16/archive/p800-fpga/p8-01/sd_card3.v" target="_blank">sd_card3.v</a>
+  </ul>
+</ul></p>
 
 <br><h4>Acknowledgements</h4>
-<p>We would like to thank the course instructor Bruce Land and the course TA Deepak for their help and advice throughout this project.</p>
+<p>We would like to thank the course instructor, Bruce Land, and the TA Deepak for their help and advice throughout this project.</p>
+
+<figure>
+<img src="files/selfie.JPG" alt="Selfie" align="middle" width="500">
+</figure>
 
 </div> <!-- end of Appendix div -->
 
