@@ -1,60 +1,58 @@
 <!DOCTYPE html>
 <!-- saved from url=(0051)http://getbootstrap.com/examples/starter-template/# -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>FPGA Command Line Interface | ECE 5760</title>
+  <link href="files/bootstrap.css" rel="stylesheet">
+  <script src="files/ie-emulation-modes-warning.js"></script>
 
-    <link href="files/bootstrap.css" rel="stylesheet">
-    <style>
-    body{
-      padding-top:40px;
-    }
-    </style>
+  <title>FPGA Command Line Interface | ECE 5760</title>
+</head>
 
-    <script src="files/ie-emulation-modes-warning.js"></script>
-  </head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#top">Command Line Interface</a>
+    </div>
+    <div id="navbar" class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="#intro">Introduction</a></li>
+        <li><a href="#design">Design</a></li>
+        <li><a href="#results">Results</a></li>
+        <li><a href="#conclusions">Conclusions</a></li>
+        <li><a href="#appendix">Appendix</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
-  <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#top">Command Line Interface</a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="#intro">Introduction</a></li>
-            <li><a href="#design">Design</a></li>
-            <li><a href="#results">Results</a></li>
-            <li><a href="#conclusions">Conclusions</a></li>
-            <li><a href="#appendix">Appendix</a></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+<div class="container">
+<div class="starter-template" style="text-align:left;">
+<link rel="stylesheet" href="files/bootstrap_002.css">
 
-    <div class="container">
-      <div class="starter-template" style="text-align:left;">
-        <link rel="stylesheet" href="files/bootstrap_002.css">
+
 <h1 id="top" style="text-align:center;">FPGA Command Line Interface and File System</h1>
 <h3 style="text-align:center;">ECE 5760 Final Project, Spring '15</h3>
 <h4 style="text-align:center;">Victor Fei (vf63), Shela Wang (sw679), and Richard Quan (rq32)</h4>
 
 <div class="container" id="intro">
 <h3>Introduction</h3>
-<p>Our project connects a VGA monitor and a keyboard to an FPGA on an Altera DE2 development board to increase the usability of the system.  By simulating a traditional command line interface on the screen, we have allowed users to perform some operations on the fly without having to compile and upload code every time.  Additionally, we utilized the DE2 board’s inbuilt SD card reader to allow users to import, manipulate, and save portable data, effectively creating a file system for the FPGA.</p>
+<p>Our project connects a VGA monitor and a keyboard to an FPGA via an Altera DE2 development board to increase the usability of the system.  By simulating a traditional command line interface on the screen, we have allowed users to perform some operations on the fly without having to compile and upload code every time.  Additionally, we utilized the DE2 board's built-in SD card reader to allow users to import, manipulate, and save portable data, effectively creating a simplified file system for the FPGA.</p>
 <figure>
 <img src="files/screen.jpg" alt="Photograph of the system" align="middle" width="500">
 <figcaption>A photograph of the system.</figcaption>
 </figure>
+
+<p>The project uses the Pancake stack CPU to handle the high-level computations and tasks. Thus, one of the results of our work on this project was several new functions that can be added to programs written for Pancake. The project also includes some preliminary work interfacing the FPGA with the on-board SD card, without using Nios II or C. We have compiled a list of the new features that we implemented, which we believe may be helpful to future students. This list is found in the <a href="#confeatures">New Features</a> section of this page.</p>
 
 </div> <!-- End of Intro div -->
 
@@ -63,11 +61,7 @@
 <small><a href="#desinterface">Block Diagram</a> | <a href="#desconnections">Connections</a> | <a href="#descomm">Communication</a> | <a href="#dessound">Sound</a> | <a href="#desdiff">Difficulties &amp; Choices</a></small> <br>
 
 <br/><h4 id="desinterface">Block Diagram</h4>
-<p>The figure below illustrates the major components of the system. The hardware interface consists of an FPGA on the DE2 board with an SD card reader connected to a PS2 keyboard and a VGA monitor.
-We use a Pancake processor running on the FPGA to interface between the software (Syrup) and hardware (Verilog) components of our design.
-The FPGA accepts user input via the keyboard, interprets and processes the command through Pancake, and outputs the I/O through a command
-line interface (CLI) displayed on the VGA, in a way reminiscent of personal computers of yore.  The SD card reader sends and receives it
-data in the same fashion.</p>
+<p>The figure below illustrates the major components of the system. The hardware interface consists of an FPGA on the DE2 board with an SD card reader connected to a PS2 keyboard and a VGA monitor. We use a Pancake processor running on the FPGA to interface between the software (Syrup) and hardware (Verilog) components of our design. The FPGA accepts user input via the keyboard, interprets and processes the command through Pancake, and outputs the I/O through a command line interface (CLI) displayed on the VGA, in a way reminiscent of personal computers of yore.  The SD card reader sends and receives it data in the same fashion.</p>
 <figure>
 <img src="files/block_diagram.png" alt="block diagram" width="700">
 <figcaption>Block diagram of the system</figcaption>
@@ -104,9 +98,12 @@ data in the same fashion.</p>
 
 <div class="container" id="conclusions">
 <h3>Conclusions</h3>
-<small><a href="#consuccess">Success</a> | <a href="#constandards">Standards</a> | <a href="#conconsiderations">Considerations</a> | <a href="#conimprovements">Improvements</a></small><br>
+<small><a href="#consuccess">Success</a> | <a href="#confeatures">Features</a> | <a href="#constandards">Standards</a> | <a href="#conconsiderations">Considerations</a> | <a href="#conimprovements">Improvements</a></small><br>
 
 <br><h4 id="consuccess">Success of the Project</h4>
+<p></p>
+
+<br><h4 id="confeatures">New Features</h4>
 <p></p>
 
 <br><h4 id="constandards">Conformity to Standards</h4>
@@ -123,7 +120,6 @@ data in the same fashion.</p>
 <div class="container" id="appendix">
 <h3>Appendix</h3>
 <br><h4>Code</h4>
-
 
 <br><h4>References</h4>
 <p></p>

@@ -12,6 +12,7 @@ html {
 }
 body {
   margin: 0;
+  padding-top:40px;
 }
 article,
 aside,
@@ -96,6 +97,7 @@ figure {
 }
 figcaption{
   font-size: smaller;
+  margin-bottom: 1em;
 }
 hr {
   height: 0;
