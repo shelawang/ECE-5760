@@ -126,7 +126,60 @@
 
   }  
 </xmp>
+<b>mod</b>: <i>modular operation</i><br>
+The modular function is implemented using subtractions. This algorithm
+for modular is very standard.
+<xmp>
+  pseudo code:
+  mod(int x, int y)
+  {
+    result = x;
+    while (result >= y)
+      result = result - y;
 
+    return result;
+  }
+</xmp>
+<b>div</b>: <i>integer division</i>
+Integer division operation is implemented using addition and subtraction
+<xmp>
+  div(int x, int y)
+  {
+    temp = x;
+    // this will eventually contains the result
+    div_counter;
+
+    while (temp >= y)
+    {
+      temp = temp - y;
+      div_counter++;
+    }
+
+    return div_counter;
+  }
+</xmp>
+
+<b>power</b>: <i>exponentiation operation</i> <br>
+power (exponential) function is implemented using multiplication.
+<xmp>
+  power(int x, int y)
+  {
+    result = 1;
+    while(y > 0)
+    {
+      result = result * x;
+      y--;
+    }
+    return result;
+  }
+</xmp>
+
+
+    <li><i>bubble_sort</i>: perform bubble sort on an array</li>
+    <li><i>print_array</i>: printing an array to vga</li>
+    <li><i>max</i>: return the max of an array</li>
+    <li><i>min</i>: return the min of an array</li>
+    <li><i>reverse</i>: reverse an array</li>
 
 
 
