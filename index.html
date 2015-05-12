@@ -21,7 +21,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#top">Command Line Interface</a>
+      <a class="navbar-brand" href="#top">Re-inventing the PC</a>
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
@@ -40,9 +40,9 @@
 <link rel="stylesheet" href="files/bootstrap_002.css">
 
 
-<h1 id="top" style="text-align:center;">FPGA Command Line Interface and File System</h1>
+<h1 id="top" style="text-align:center;">Re-inventing the Personal Computer: FPGA Command Line Interface and File System </h1>
 <h3 style="text-align:center;">ECE 5760 Final Project, Spring 2015</h3>
-<h4 style="text-align:center;">Victor Fei (vf63), Shela Wang (sw679), and Richard Quan (rq32)</h4>
+<h4 style="text-align:center;">Shela Wang (sw679), Victor Fei (vf63), and Richard Quan (rq32)</h4>
 
 <div class="container" id="intro">
 <h3>Introduction</h3>
@@ -87,7 +87,7 @@
     <li><i>mod</i>: modular operation</li>
     <li><i>div</i>: integer division</li>
     <li><i>power</i>: exponentiation operation</li>
-    <li><i>bubble_sort</i>: perform bubble sort on an array</li>
+    <li><i>bubble_sort</i>: perform bubble sort on an array in ascending order</li>
     <li><i>print_array</i>: printing an array to vga</li>
     <li><i>max</i>: return the max of an array</li>
     <li><i>min</i>: return the min of an array</li>
@@ -95,8 +95,7 @@
   </ul>
 
   <b>itoa</b>: <i>printing number to vga in decimal format</i>
-  <xmp>
-  pseudo code:
+  <xmp>pseudo-code:
   itoa(int number)
   {
     // temp stores the temporary result
@@ -129,8 +128,7 @@
 <b>mod</b>: <i>modular operation</i><br>
 The modular function is implemented using subtractions. This algorithm
 for modular is very standard.
-<xmp>
-  pseudo code:
+<xmp>pseudo-code:
   mod(int x, int y)
   {
     result = x;
@@ -142,7 +140,7 @@ for modular is very standard.
 </xmp>
 <b>div</b>: <i>integer division</i>
 Integer division operation is implemented using addition and subtraction
-<xmp>
+<xmp>pseudo-code:
   div(int x, int y)
   {
     temp = x;
@@ -161,7 +159,7 @@ Integer division operation is implemented using addition and subtraction
 
 <b>power</b>: <i>exponentiation operation</i> <br>
 power (exponential) function is implemented using multiplication.
-<xmp>
+<xmp>pseudo-code:
   power(int x, int y)
   {
     result = 1;
@@ -174,8 +172,31 @@ power (exponential) function is implemented using multiplication.
   }
 </xmp>
 
+<b>bubble_sort</b>: <i> perform bubble sort on an array in ascending order</i> <br>
+  The bubble sort algorithm we implemented is a very standard bubble sort
+  algorithm. In particular, our pancake version of the bubble sort is based
+  on this <a href="http://www.java-examples.com/java-bubble-sort-example">one</a>:
+<xmp>pseudo-code:
+  bubble_sort(int[] array, int array_len)
+  {
+    // In bubble sort, we traverse the array from the first element to the last
+    // array index and compare each neighbouring elements. The current element
+    // is swapped with the next element if the next element is larger
+      
+    for(int i=0; i < n; i++)
+    {
+      for(int j=1; j < (n-i); j++)
+      {
+        if(array[j-1] > array[j])
+        {
+          swap(array[j-1], array[j]);
+        }
+                         
+      }
+    }
+  }
+</xmp>
 
-    <li><i>bubble_sort</i>: perform bubble sort on an array</li>
     <li><i>print_array</i>: printing an array to vga</li>
     <li><i>max</i>: return the max of an array</li>
     <li><i>min</i>: return the min of an array</li>
@@ -327,6 +348,8 @@ TODO
   <ul>
   <li>The Verilog for the SD card controller is in <a href="http://www.theoengel.nl/ddpx16/archive/p800-fpga/p8-01/sd_card3.v" target="_blank">sd_card3.v</a>
   </ul>
+<li> <a href="http://www.java-examples.com/java-bubble-sort-example">Bubble sort</a> algorithm in ascending order </li>
+
 </ul></p>
 
 <br><h4>Acknowledgements</h4>
