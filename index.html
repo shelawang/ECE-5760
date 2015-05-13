@@ -62,7 +62,7 @@
   a command line interface to take in commands. The interface is able to interpret
   three main groups of commands: arithmetic calculations, file system access, and array operations.
   <h4>Arithmetic Calculations</h4>
-  <p>Arithmetic calculations is launched through typing in the command <i>calc</i>, then followed by the arithmetic operations. We use reverse Polish notation for the operations. Thesupported operations are addition, subtraction, multiplication, division, and modular.</p>
+  <p>Arithmetic calculations is launched through typing in the command <i>calc</i>, then followed by the arithmetic operations. We use reverse Polish notation for the operations. The supported operations are addition, subtraction, multiplication, division, and modular.</p>
   <figure>
   <img src="files/calculation_demo.png" alt="arithmetic operation demo" width="150">
   <figcaption>Arithmetic operation demo</figcaption>
@@ -119,7 +119,7 @@
 <hr>
 <div class="container" id="design">
 <h2>Design</h2>
-<small><a href="#desinterface">Block Diagram</a> | <a href="#desconnections">Connections</a> | <a href="#descomm">Communication</a> | <a href="#dessound">Sound</a> | <a href="#desdiff">Difficulties &amp; Choices</a></small> <br>
+<small><a href="#desinterface">Block Diagram</a> | <a href="#desconnections">Connections</a> | <a href="#dessound">Sound</a> | <a href="#desdiff">Difficulties &amp; Choices</a></small> <br>
 
 <br/><h3 id="desinterface">Block Diagram</h3>
 <p>The figure below illustrates the major components of the system. The hardware interface consists of an FPGA on the DE2 board with an SD card reader connected to a PS/2 keyboard and a VGA monitor. We use a Pancake processor running on the FPGA to interface between the software (Syrup) and hardware (Verilog) components of our design. The FPGA accepts user input via the keyboard, interprets and processes the command through Pancake, and outputs the I/O through a command line interface (CLI) displayed on the VGA, in a way reminiscent of personal computers of yore.  The SD card reader sends and receives data in the same fashion.</p>
@@ -129,6 +129,7 @@
 </figure>
 
 <br/><h3 id="desconnections">Connections</h3>
+The figure below is a photograph of the physical connections and ports used on the DE2 development board.
 <figure>
 <img src="files/connections.png" alt="Photograph of connections to the development board" width="700">
 <figcaption>Photograph of connections to the development board</figcaption>
@@ -407,9 +408,11 @@ power (exponential) function is implemented using multiplication.
 
 <div class="container" id="results">
 <h3>Results</h3>
+<small><a href="#resspeed">Speed/Accuracy</a> | <a href="#ressafety">Safety</a> | <a href="#resusability">Usability</a></small><br>
 <br>
-For the results of the demonstration, please refer to <i>interface</i> section
+For the results of the demonstration, please refer to <a href="#interface">Interface</a> section.
 
+<br/><h4 id="resspeed">Speed and Accuracy</h4>
 <h5>Calculations</h5>
 <p>
   Our calculator is able to correctly calculate arithmetic operations accurately.
@@ -421,7 +424,7 @@ For the results of the demonstration, please refer to <i>interface</i> section
 
 <h5>Array Operations</h5>
 <p>
-  All the array operations correctly perform operations on any given array. There are 
+  All the array operations correctly perform operations on any given array. There are
   no known corner cases that trigger those algorithm to fail.
   We implemented bubble sort as the sorting algorithm. Bubble sort is known to have a
   big-O speed of O(n^2), which is very slow. For our demo purpose, we used small array, which
@@ -628,7 +631,7 @@ After this initial setup, reprogramming the FPGA after modifying the .cmp file i
 
 
 <br><h4 id="constandards">Conformity to Standards</h4>
-<p>Our project does not use very many industry standards, as very few are required to run this system. The main standard we use is the ASCII format used to convert hexadecimal numbers into characters for the PS2 keyboard inputs. 
+<p>Our project does not use very many industry standards, as very few are required to run this system. The main standard we use is the ASCII format used to convert hexadecimal numbers into characters for the PS2 keyboard inputs.
 We encode 128 specified characters into 7-bit binary integers using a hardware implemented Look-Up Table.  Additionally, we use the Secure Digital standard for reading and writing to the memory of the SD card.</p>
 
 <br><h4 id="conconsiderations">Legal and Ethical Considerations</h4>
