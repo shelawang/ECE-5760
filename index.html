@@ -408,6 +408,7 @@ power (exponential) function is implemented using multiplication.
 <div class="container" id="results">
 <h3>Results</h3>
 <br>
+For the results of the demonstration, please refer to <i>interface</i> section
 
 <h5>Calculations</h5>
 <p>
@@ -416,6 +417,16 @@ power (exponential) function is implemented using multiplication.
   two digits. The state machine of the calculator technically supports multiple digits, but in reality
   the operands cannot be more than two digits. This is a bug that
   we have not been able to figure it out.
+</p>
+
+<h5>Array Operations</h5>
+<p>
+  All the array operations correctly perform operations on any given array. There are 
+  no known corner cases that trigger those algorithm to fail.
+  We implemented bubble sort as the sorting algorithm. Bubble sort is known to have a
+  big-O speed of O(n^2), which is very slow. For our demo purpose, we used small array, which
+  does not affect the speed. However, we were to use a very large array, we probably would observe
+  the delay in sorting.
 </p>
 
 <h5>File System</h5>
