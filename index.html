@@ -419,7 +419,7 @@ power (exponential) function is implemented using multiplication.
 </p>
 
 <h5>File System</h5>
-<p></p>
+<p>Our file system is simple but functional. However, due to the issue of only having sector-level access rather than byte-level access, as later discussed in the section <a href="#sdctrl">Useful Features - SD Card Controller</a>, file operations are slow. The most noticeably slow operation is <i>ls</i>, which quite slowly prints out one-at-a-time which files have content in them. This slowness is present because the system has to sequentially read twenty-six 512-byte sectors in order to figure out which files are valid and which are not.</p>
 
 <br><h4 id="ressafety">Safety</h4>
 <p>Our system has no moving parts and consists solely of a DE2 development board, keyboard, VGA monitor, and SD card. These components are fairly familiar to the typical user, and we therefore do not foresee using our system as being any more dangerous than using a regular personal computer.</p>
