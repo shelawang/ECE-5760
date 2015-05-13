@@ -286,7 +286,7 @@ language library. We have also implemented functions that are specific to our pr
 
   </ul>
   <h4>Calculator</h4>
-  The interactive command line calculator implements a FSM to interpret the commands from the user.                 
+  The interactive command line calculator implements a FSM to interpret the commands from the user.
   <figure>
   <img src="files/calculator_fsm.png" alt="calculator fsm" width="700">
   <figcaption>FSM of Calculator</figcaption>
@@ -294,11 +294,13 @@ language library. We have also implemented functions that are specific to our pr
 
 </p>
 
-  <li><b>Shela? expand on the functions</b><i>parse_file_cmd       </i>: implements the command <i>ls</i>, which reveals what files are on the SD card </li>              
-  <li><b>Shela? expand on the functions</b><i>read_sd              </i>: read the content of a file contained on the SD card into the memory</li>       
-  <li><b>Shela? expand on the functions</b><i>read_byte_sd         </i>: read a single byte from the SD card at a specific address</li>            
-  <li><b>Shela? expand on the functions</b><i>write_sd             </i>: create and write a file to the SD card</li>        
-  <li><b>Shela? expand on the functions</b><i>write_byte_sd    </i>: write a single byte to the SD card at a specific address</li>    
+<h4>File System-Related Functions</h4>
+
+<li><i>parse_file_cmd       </i>: implements the command <i>ls</i>, which reveals what files are on the SD card </li>
+<li><i>read_sd              </i>: read the content of a file contained on the SD card into the memory</li>
+<li><i>read_byte_sd         </i>: read a single byte from the SD card at a specific address</li>
+<li><i>write_sd             </i>: create and write a file to the SD card</li>
+<li><i>write_byte_sd    </i>: write a single byte to the SD card at a specified address</li>
 
 <h5>Accepting User Input</h5>
 <p></p>
@@ -331,7 +333,6 @@ language library. We have also implemented functions that are specific to our pr
 
 <h5>Minimizing Input/Output Ports</h5>
 <p>Once it is instantiated by an upper module, the "minicpu" module provided by Bruce represents the Pancake CPU and its input and output ports. One important thing to remember when using this module is that it has limited input and output ports &mdash; eight of each. Thus, one aspect of our design that we had to manage was what data we were sending in and out of the CPU so that we would not run out of ports. We originally based our initial code on Bruce's <a href="http://people.ece.cornell.edu/land/courses/ece5760/DE2/TinyCPU/Stack_machine_2013/VGA_sram_3cpu_2013.v" target="_blank">3 CPU Example</a>. Since we only needed one CPU, we found that after removing two of the three in the example, we could in fact free up several ports.</p>
-@Shela
 
 <h5>Multiple Key-Presses</h5>
 <p></p> @Shela or Richard
