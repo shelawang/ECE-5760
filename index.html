@@ -439,10 +439,22 @@ power (exponential) function is implemented using multiplication.
 <p>This section lists some of the features that we implemented for this project, which we believe may be useful for future students working with the Pancake stack CPU, an SD card, or a PS/2 keyboard on the DE2 development board.</p>
 
 <h5>New Pancake functions</h5>
-<p>@Victor: Discuss new functions</p>
+<p>
+  As mentioned above in the <i>software</i> section. The functions that we could be useful to the Pancake library include:
   <ul>
-  <li>
+    <li><i>itoa</i>: printing number to vga in decimal format</li>
+    <li><i>mod</i>: modular operation</li>
+    <li><i>div</i>: integer division</li>
+    <li><i>power</i>: exponentiation operation</li>
+    <li><i>bubble_sort</i>: perform bubble sort on an array in ascending order</li>
+    <li><i>print_array</i>: printing an array to vga</li>
+    <li><i>max</i>: return the max of an array</li>
+    <li><i>min</i>: return the min of an array</li>
+    <li><i>reverse</i>: reverse an array</li>
   </ul>
+
+</p>
+ 
 <h5>Pancake compilation script</h5>
 <p>After making changes to the .cmp file in which the Pancake code is written, a multi-step process needs to be completed before the new code can be programmed onto the FPGA. The steps are as follows:</p>
 <ol>
@@ -612,15 +624,22 @@ After this initial setup, reprogramming the FPGA after modifying the .cmp file i
 <h5>Error Messages</h5>
 <p>Having meaningful error messages when a user enters an invalid command would improve the usability of our system. In our current system, if a user enters an invalid command or tries to display the contents of a file that does not exist, then the CLI simply does not output anything. In contrast, if a user enters an invalid command in Linux, for example, the CLI will display a message saying that the command was unsuccessful so that the user knows to try a different command.</p>
 
-<h5>Handling Larger Numbers</h5>
-<p></p>
-[i.e., calculations with larger numbers] @Victor
-
 <h5>Handling Negative Numbers</h5>
-<p></p> @Victor
+<p>
+  Currently, our arithmetic operations only support positive numbers. Since we use the
+  same hardware for negative numbers represented in two's complements, adding support
+  to negative numbers should not be too difficult a task. However, we would have to improve
+  on our command line intepreter to be able to parse negative numbers.
+</p>
 
 <h5>Interpreter</h5>
-<p></p> @Victor?
+<p>
+  Originally, our personal computer is supposed to be programmable. Since we did not
+  have enough time, we were unable to implement this feature. Additionally, with the existing
+  software, we have already run out of addresses for the program (the max number of instructions is 0xfff, the address is 12 bit).
+  To implement an intepreter would require more software, which implies that we would
+  have to extend the hardware to make the instrucitons more than 12 bits.
+</p>
 
 <h5>Efficient SD Card Access</h5>
 <p>In the project's current form, a single "write" to the SD card actually writes an entire 512-byte "sector" of the SD card. Thus, the storage capacity on the SD card is reduced by a factor of 512, while the time required to read and write from the card is increased by a factor of 512. Improvements to reading and writing the SD card would greatly enhance the usability of the system, because file reads and writes would be much faster, and users would have the ability to create more files.</p>
