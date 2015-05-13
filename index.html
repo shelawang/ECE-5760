@@ -354,7 +354,8 @@ language library. We have also implemented functions that are specific to our pr
 <p></p>
 
 <h5>Minimizing Input/Output Ports</h5>
-<p></p> @Shela
+<p>Once it is instantiated by an upper module, the "minicpu" module provided by Bruce represents the Pancake CPU and its input and output ports. One important thing to remember when using this module is that it has limited input and output ports &mdash; eight of each. Thus, one aspect of our design that we had to manage was what data we were sending in and out of the CPU so that we would not run out of ports. We originally based our initial code on Bruce's <a href="http://people.ece.cornell.edu/land/courses/ece5760/DE2/TinyCPU/Stack_machine_2013/VGA_sram_3cpu_2013.v" target="_blank">3 CPU Example</a>. Since we only needed one CPU, we found that after removing two of the three in the example, we could in fact free up several ports.</p>
+@Shela
 
 <h5>Multiple Key-Presses</h5>
 <p></p> @Shela or Richard
@@ -402,8 +403,33 @@ language library. We have also implemented functions that are specific to our pr
   <li>
   </ul>
 <h5>Pancake compilation script</h5>
-<p></p> @Shela
-TODO talk about how the script works and how to use it
+<p>After making changes to the .cmp file in which the Pancake code is written, a multi-step process needs to be completed before the new code can be programmed onto the FPGA. The steps are as follows:</p>
+<ol>
+<li>Compile the Pancake code using Bruce Land's Syrup compiler in MATLAB.
+<li>In Quartus II, select Processing > Update Memory Initialization File.
+<li>Run the Assembler by selecting Processing > Start > Start Assembler.
+<li>Program the FPGA.
+</ol>
+<p>Luckily, a full compile of the HDL is usually not required if the only changes were in the .cmp file; however, we decided to simplify steps 2 through 4 of this process by creating a <b>Windows</b> batch script called pancake_compile.bat. <!-- @SHELA TODO: Include link to the script here. --></p>
+<p>A small amount of setup is required to use this script:</p>
+<ol>
+<li>Find the "Quartus bin" directory on your computer. On the lab computers, this is C:/altera/11.0/quartus/bin.
+<li>Copy this path to your clipboard.
+<li>Follow the directions <a href="https://www.java.com/en/download/help/path.xml" target="_blank">at this link</a> to find out how to modify the PATH system variable on your computer. (Follow the Windows 7 instructions for the lab computers.)
+<li>Without adding any spaces, add a semicolon to the end of the value for PATH, then paste in the path to the Quartus bin directory.
+<li>Click OK.
+<li>Restart the Command Prompt, if you have it open.
+</ol>
+
+After this initial setup, reprogramming the FPGA after modifying the .cmp file is as follows:
+<ol>
+<li>Ensure the pancake_program.bat file and the .cmp file for your project are in the same directory.
+<li>Navigate the Command Prompt to the directory that holds the .bat file.
+<li>Compile the Pancake program using Bruce's MATLAB compiler.
+<li>Enter into the Command Prompt "pancake_program.bat" (without quotes).
+<li>Your new software should now be on the FPGA!
+<li>Repeat steps 3-5 as necessary.
+</ol>
 
 <h5>SD Card controller</h5>
 <p>Using a Verilog implementation of an SD card controller that we discovered online (see <a href="#references">References</a>), we were able to passably read and write an SD card using only Verilog (i.e., without using Nios II).</p>
