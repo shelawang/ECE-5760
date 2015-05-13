@@ -69,9 +69,9 @@
   </figure>
 
   <h4>Array Operations</h4>
-  We implemented various array operations to demonstrate that our system has 
+  We implemented various array operations to demonstrate that our system has
   some support for data structures. Many of the array operations also intend to be
-  an addition to the Pancake programming language. The array operations that are 
+  an addition to the Pancake programming language. The array operations that are
   supported are: <i>new(), max(), min(), reverse(), sort() </i>. <br>
   We could directly perform these array operations on a new array entered through the
   command line or on an array that is stored in the system variable <i>array</i>,
@@ -92,7 +92,7 @@
   <figcaption>File system demo</figcaption>
   </figure>
   The figure above shows file system access. The first command <i>ls</i> reveals
-  all the files that are currently avaliable on the SD card. <i>mk a hello</i> 
+  all the files that are currently avaliable on the SD card. <i>mk a hello</i>
   creates a new file with content <i>hello</i>. We type in the command <i>ls</i> again
   to show that file <i>a</i> indeed exists on the SD drive. We then <i>cat a</i>
   to read the content of file <i>a</i>. We then type <i>rm a</i> to remove <i>a</i> from the
@@ -353,8 +353,10 @@ power (exponential) function is implemented using multiplication.
 <li><i>write_byte_sd    </i>: write a single byte to the SD card at a specified address</li>
 
 <h5>File System</h5>
-<p>The file system uses the functions mentioned above to read and write from the SD card. We decided that, to simplify the system, file names would only consist of one letter, allowing for 26 possible files. </p>
-@Shela don't forget to talk about valid bytes/bits
+<p>The file system uses the functions mentioned above to read and write from the SD card. We decided that, to simplify the system, file names would only consist of one letter, allowing for 26 possible files. The SD card that we used had a capacity of 32 MB, or approximately 60,000 512-byte sectors. As discussed in more detail later in this document, our system only implemented reads and writes at the sector-level, rather than the byte-level, leaving us with approximately 60,000 spots to read and write on the SD card. To fit our intended 26 files, we decided to set a fixed size of 2000 bytes maximum for each file. We believed that this would be sufficient for the purposes of our computer, which only has limited text-editing capabilities, anyway.</p>
+<p>When a file is to be written, the first byte of the file is written as a 1, to show that it is valid. This scheme works because when an SD card is formatted clean, every sector of the card is set to 0, except for the 0th (first) sector. This sector is reserved, so we actually started our first file (file 'a') at the 200th sector, rather than the 1st sector, to avoid writing over this reserved space.</p>
+<p>Once the first "valid" byte is written, then the rest of the bytes of the file are written. After that, an "end of file" byte is written to the sector immediately following the last character of the file. We chose 3 for this purpose. (In fact, 3 represents "end of text" in ASCII notation.)</p>
+<p>Reading a file simply follows this format. First, the 0th byte of the file is read: If it is 1, then the system continues reading the rest of the file. Otherwise, the file is not valid, and the system does nothing. Then each byte is read and printed to the VGA monitor as it is read. When the "end of file" byte is read (3, in our cases), then the reading stops.</p>
 
 <br/><h4 id="deshardware">Hardware</h4>
 <p></p>
