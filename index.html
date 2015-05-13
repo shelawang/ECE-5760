@@ -119,7 +119,9 @@
 <hr>
 <div class="container" id="design">
 <h2>Design</h2>
-<small><a href="#desinterface">Block Diagram</a> | <a href="#desconnections">Connections</a> | <a href="#descomm">Communication</a> | <a href="#desdiff">Difficulties &amp; Choices</a></small> <br>
+
+<small><a href="#desinterface">Block Diagram</a> | <a href="#desconnections">Connections</a> | <a href="#desdiff">Difficulties &amp; Choices</a></small> <br>
+
 
 <br/><h3 id="desinterface">Block Diagram</h3>
 <p>The figure below illustrates the major components of the system. The hardware interface consists of an FPGA on the DE2 board with an SD card reader connected to a PS/2 keyboard and a VGA monitor. We use a Pancake processor running on the FPGA to interface between the software (Syrup) and hardware (Verilog) components of our design. The FPGA accepts user input via the keyboard, interprets and processes the command through Pancake, and outputs the I/O through a command line interface (CLI) displayed on the VGA, in a way reminiscent of personal computers of yore.  The SD card reader sends and receives data in the same fashion.</p>
@@ -129,6 +131,7 @@
 </figure>
 
 <br/><h3 id="desconnections">Connections</h3>
+The figure below is a photograph of the physical connections and ports used on the DE2 development board.
 <figure>
 <img src="files/connections.png" alt="Photograph of connections to the development board" width="700">
 <figcaption>Photograph of connections to the development board</figcaption>
@@ -237,7 +240,7 @@ power (exponential) function is implemented using multiplication.
 <b>bubble_sort</b>: <i> perform bubble sort on an array in ascending order</i> <br>
   The bubble sort algorithm we implemented is a very standard bubble sort
   algorithm. In particular, our Pancake version of the bubble sort is based
-  on this <a href="http://www.java-examples.com/java-bubble-sort-example">one</a>:
+  on this <a href="http://www.java-examples.com/java-bubble-sort-example" target="_blank">one</a>:
 <xmp>pseudo-code:
   bubble_sort(int[] array, int array_len)
   {
@@ -407,9 +410,11 @@ power (exponential) function is implemented using multiplication.
 
 <div class="container" id="results">
 <h3>Results</h3>
+<small><a href="#resspeed">Speed and Accuracy</a> | <a href="#ressafety">Safety</a> | <a href="#resusability">Usability</a></small><br>
 <br>
-For the results of the demonstration, please refer to <i>interface</i> section
+For the results of the demonstration, please refer to <a href="#interface">Interface</a> section.
 
+<br/><h4 id="resspeed">Speed and Accuracy</h4>
 <h5>Calculations</h5>
 <p>
   Our calculator is able to correctly calculate arithmetic operations accurately.
@@ -421,7 +426,7 @@ For the results of the demonstration, please refer to <i>interface</i> section
 
 <h5>Array Operations</h5>
 <p>
-  All the array operations correctly perform operations on any given array. There are 
+  All the array operations correctly perform operations on any given array. There are
   no known corner cases that trigger those algorithm to fail.
   We implemented bubble sort as the sorting algorithm. Bubble sort is known to have a
   big-O speed of O(n^2), which is very slow. For our demo purpose, we used small array, which
@@ -478,7 +483,7 @@ For the results of the demonstration, please refer to <i>interface</i> section
 <li>Run the Assembler by selecting Processing > Start > Start Assembler.
 <li>Program the FPGA.
 </ol>
-<p>Luckily, a full compile of the HDL is usually not required if the only changes were in the .cmp file; however, we decided to simplify steps 2 through 4 of this process by creating a <b>Windows</b> batch script called <a href="files/pancake_program.bat">pancake_program.bat</a>.</p>
+<p>Luckily, a full compile of the HDL is usually not required if the only changes were in the .cmp file; however, we decided to simplify steps 2 through 4 of this process by creating a <b>Windows</b> batch script called <a href="files/pancake_program.bat" target="_blank">pancake_program.bat</a>.</p>
 <p>A small amount of setup is required to use this script:</p>
 <ol>
 <li>Find the "Quartus bin" directory on your computer. On the lab computers, this is C:/altera/11.0/quartus/bin.
@@ -491,10 +496,10 @@ For the results of the demonstration, please refer to <i>interface</i> section
 
 After this initial setup, reprogramming the FPGA after modifying the .cmp file is as follows:
 <ol>
-<li>Ensure the Pancake_program.bat file and the .cmp file for your project are in the same directory.
+<li>Ensure the pancake_program.bat file and the .cmp file for your project are in the same directory.
 <li>Navigate the Command Prompt to the directory that holds the .bat file.
 <li>Compile the Pancake program using Bruce's MATLAB compiler.
-<li>Enter into the Command Prompt "Pancake_program.bat" (without quotes).
+<li>Enter into the Command Prompt "pancake_program.bat" (without quotes).
 <li>Your new software should now be on the FPGA!
 <li>Repeat steps 3-5 as necessary.
 </ol>
@@ -628,7 +633,7 @@ After this initial setup, reprogramming the FPGA after modifying the .cmp file i
 
 
 <br><h4 id="constandards">Conformity to Standards</h4>
-<p>Our project does not use very many industry standards, as very few are required to run this system. The main standard we use is the ASCII format used to convert hexadecimal numbers into characters for the PS2 keyboard inputs. 
+<p>Our project does not use very many industry standards, as very few are required to run this system. The main standard we use is the ASCII format used to convert hexadecimal numbers into characters for the PS2 keyboard inputs.
 We encode 128 specified characters into 7-bit binary integers using a hardware implemented Look-Up Table.  Additionally, we use the Secure Digital standard for reading and writing to the memory of the SD card.</p>
 
 <br><h4 id="conconsiderations">Legal and Ethical Considerations</h4>
@@ -669,8 +674,8 @@ We encode 128 specified characters into 7-bit binary integers using a hardware i
 <div class="container" id="appendix">
 <h3>Appendix</h3>
 <br><h4>Code</h4>
-<p>The entire Quartus II project for this project, along with the .cmp file in which the Pancake program is written, as well as the <a href="files/pancake_program.bat">pancake_program.bat</a> script mentioned above, is included in this .zip file:</p>
-<p><center><b><a href="FPGA_CLI.zip">Download FPGA_CLI.zip</a></b></center></p>
+<p>The entire Quartus II project for this project, along with the .cmp file in which the Pancake program is written, as well as the <a href="files/pancake_program.bat" target="_blank">pancake_program.bat</a> script mentioned above, is included in this .zip file:</p>
+<p><center><b><a href="files/FPGA_CLI.zip">Download FPGA_CLI.zip</a></b></center></p>
 
 <br><h4>Parts List</h4>
 <p><ul>
@@ -693,7 +698,7 @@ We encode 128 specified characters into 7-bit binary integers using a hardware i
   <ul>
   <li>The Verilog for the SD card controller is in <a href="http://www.theoengel.nl/ddpx16/archive/p800-fpga/p8-01/sd_card3.v" target="_blank">sd_card3.v</a>
   </ul>
-<li> <a href="http://www.java-examples.com/java-bubble-sort-example">Bubble sort</a> algorithm in ascending order </li>
+<li> <a href="http://www.java-examples.com/java-bubble-sort-example" target="_blank">Bubble sort</a> algorithm in ascending order </li>
 
 </ul></p>
 
