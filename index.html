@@ -238,7 +238,7 @@ power (exponential) function is implemented using multiplication.
 <b>bubble_sort</b>: <i> perform bubble sort on an array in ascending order</i> <br>
   The bubble sort algorithm we implemented is a very standard bubble sort
   algorithm. In particular, our Pancake version of the bubble sort is based
-  on this <a href="http://www.java-examples.com/java-bubble-sort-example">one</a>:
+  on this <a href="http://www.java-examples.com/java-bubble-sort-example" target="_blank">one</a>:
 <xmp>pseudo-code:
   bubble_sort(int[] array, int array_len)
   {
@@ -481,7 +481,7 @@ For the results of the demonstration, please refer to <a href="#interface">Inter
 <li>Run the Assembler by selecting Processing > Start > Start Assembler.
 <li>Program the FPGA.
 </ol>
-<p>Luckily, a full compile of the HDL is usually not required if the only changes were in the .cmp file; however, we decided to simplify steps 2 through 4 of this process by creating a <b>Windows</b> batch script called <a href="files/pancake_program.bat">pancake_program.bat</a>.</p>
+<p>Luckily, a full compile of the HDL is usually not required if the only changes were in the .cmp file; however, we decided to simplify steps 2 through 4 of this process by creating a <b>Windows</b> batch script called <a href="files/pancake_program.bat" target="_blank">pancake_program.bat</a>.</p>
 <p>A small amount of setup is required to use this script:</p>
 <ol>
 <li>Find the "Quartus bin" directory on your computer. On the lab computers, this is C:/altera/11.0/quartus/bin.
@@ -494,10 +494,10 @@ For the results of the demonstration, please refer to <a href="#interface">Inter
 
 After this initial setup, reprogramming the FPGA after modifying the .cmp file is as follows:
 <ol>
-<li>Ensure the Pancake_program.bat file and the .cmp file for your project are in the same directory.
+<li>Ensure the pancake_program.bat file and the .cmp file for your project are in the same directory.
 <li>Navigate the Command Prompt to the directory that holds the .bat file.
 <li>Compile the Pancake program using Bruce's MATLAB compiler.
-<li>Enter into the Command Prompt "Pancake_program.bat" (without quotes).
+<li>Enter into the Command Prompt "pancake_program.bat" (without quotes).
 <li>Your new software should now be on the FPGA!
 <li>Repeat steps 3-5 as necessary.
 </ol>
@@ -672,8 +672,8 @@ We encode 128 specified characters into 7-bit binary integers using a hardware i
 <div class="container" id="appendix">
 <h3>Appendix</h3>
 <br><h4>Code</h4>
-<p>The entire Quartus II project for this project, along with the .cmp file in which the Pancake program is written, as well as the <a href="files/pancake_program.bat">pancake_program.bat</a> script mentioned above, is included in this .zip file:</p>
-<p><center><b><a href="FPGA_CLI.zip">Download FPGA_CLI.zip</a></b></center></p>
+<p>The entire Quartus II project for this project, along with the .cmp file in which the Pancake program is written, as well as the <a href="files/pancake_program.bat" target="_blank">pancake_program.bat</a> script mentioned above, is included in this .zip file:</p>
+<p><center><b><a href="files/FPGA_CLI.zip">Download FPGA_CLI.zip</a></b></center></p>
 
 <br><h4>Parts List</h4>
 <p><ul>
@@ -696,7 +696,7 @@ We encode 128 specified characters into 7-bit binary integers using a hardware i
   <ul>
   <li>The Verilog for the SD card controller is in <a href="http://www.theoengel.nl/ddpx16/archive/p800-fpga/p8-01/sd_card3.v" target="_blank">sd_card3.v</a>
   </ul>
-<li> <a href="http://www.java-examples.com/java-bubble-sort-example">Bubble sort</a> algorithm in ascending order </li>
+<li> <a href="http://www.java-examples.com/java-bubble-sort-example" target="_blank">Bubble sort</a> algorithm in ascending order </li>
 
 </ul></p>
 
