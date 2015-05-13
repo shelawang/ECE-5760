@@ -53,7 +53,7 @@
 <figcaption>A photograph of the system.</figcaption>
 </figure>
 
-<p>The project uses the Pancake stack CPU to handle the high-level computations and tasks. Thus, one of the results of our work on this project was several new functions that can be added to programs written for Pancake. The project also includes some preliminary work interfacing the FPGA with the on-board SD card, without using Nios II or C. We have compiled a list of the new features that we implemented, which we believe may be helpful to future students. This list is found in the <a href="#confeatures">Useful Features</a> section of this page.</p>
+<p>The project uses the Pancake stack CPU to handle the high-level computations and tasks. Thus, one of the results of our work on this project was implementing several new functions for the Pancake programming language library. The project also includes some preliminary work interfacing the FPGA with the on-board SD card, without using Nios II or C. We have compiled a list of the new features that we implemented, which we believe may be helpful to future students. This list is found in the <a href="#confeatures">Useful Features</a> section of this page.</p>
 <hr>
 </div> <!-- End of Intro div -->
 <div class="container" id="interface">
@@ -119,7 +119,9 @@
 <hr>
 <div class="container" id="design">
 <h2>Design</h2>
+
 <small><a href="#desinterface">Block Diagram</a> | <a href="#desconnections">Connections</a> | <a href="#desdiff">Difficulties &amp; Choices</a></small> <br>
+
 
 <br/><h3 id="desinterface">Block Diagram</h3>
 <p>The figure below illustrates the major components of the system. The hardware interface consists of an FPGA on the DE2 board with an SD card reader connected to a PS/2 keyboard and a VGA monitor. We use a Pancake processor running on the FPGA to interface between the software (Syrup) and hardware (Verilog) components of our design. The FPGA accepts user input via the keyboard, interprets and processes the command through Pancake, and outputs the I/O through a command line interface (CLI) displayed on the VGA, in a way reminiscent of personal computers of yore.  The SD card reader sends and receives data in the same fashion.</p>
@@ -419,7 +421,7 @@ For the results of the demonstration, please refer to <a href="#interface">Inter
   However, one bug that we have not been able to fix is when the operands have more than
   two digits. The state machine of the calculator technically supports multiple digits, but in reality
   the operands cannot be more than two digits. This is a bug that
-  we have not been able to figure it out.
+  we have not been able to figure out.
 </p>
 
 <h5>Array Operations</h5>
