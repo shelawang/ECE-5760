@@ -8,7 +8,7 @@
   <link href="files/bootstrap.css" rel="stylesheet">
   <script src="files/ie-emulation-modes-warning.js"></script>
 
-  <title>FPGA Command Line Interface | ECE 5760</title>
+  <title>Re-inventing the PC: FPGA Command Line Interface | ECE 5760</title>
 </head>
 
 <body>
@@ -54,7 +54,7 @@
 </figure>
 
 <p>The project uses the Pancake stack CPU to handle the high-level computations and tasks. Thus, one of the results of our work on this project was several new functions that can be added to programs written for Pancake. The project also includes some preliminary work interfacing the FPGA with the on-board SD card, without using Nios II or C. We have compiled a list of the new features that we implemented, which we believe may be helpful to future students. This list is found in the <a href="#confeatures">Useful Features</a> section of this page.</p>
-
+<hr>
 </div> <!-- End of Intro div -->
 <div class="container" id="interface">
   <h2>Interface</h2>
@@ -76,7 +76,19 @@
   We could directly perform these array operations on a new array entered through the
   command line or on an array that is stored in the system variable <i>array</i>,
   which holds the array that was just referenced to using any of the
-  array operations.
+  array operations. The array operations work both on integers and chars, since we
+  look at the ASCII values of the array element to perform sort, max, and min operations.
+  The format of each array element is only in 8 bit chars. Thus, our system does not support double digit
+  numbers for the array.
+  <figure>
+  <img src="files/array_operation.png" alt="array operation demo" width="300">
+  <figcaption>array operation demo</figcaption>
+  </figure>
+  In the figure above, we see that <i>new(1 5 9 2 1)</i> creates a new array based on
+  the input from the command line, the array is stored into variable <i>array</i> in SRAM.
+  <i>sort</i> operation directly sorts the array that is already stored in memory.
+  Similary, <i>max</i> and <i>min</i> finds the max and min element in that array respectively and <i>rev(3 5 4)</i> 
+  reverses the array and becomes 4 5 3.
 
   <h4>File System Access</h4>
   We implemented commands <i>ls</i>, <i>cat</i>, <i>rm</i> and <i>mk</i> to interact with the file system.
@@ -96,11 +108,15 @@
   creates a new file with content <i>hello</i>. We type in the command <i>ls</i> again
   to show that file <i>a</i> indeed exists on the SD drive. We then <i>cat a</i>
   to read the content of file <i>a</i>. We then type <i>rm a</i> to remove <i>a</i> from the
-  SD card. <i>ls</i> again to show that <i>a</i> has indeed been removed.
-
+  SD card. <i>ls</i> again to show that <i>a</i> has indeed been removed. <br>
+  Additionally, the <i>cp</i> command copies the array that was recently read from the SD card to
+  the variable <i>array</i> in memory (SRAM) so that we can perform array operations on
+  data from the file system. In the figure above, we see that <i>cat e</i> and <i>cp</i>
+  copies string <i>ece5760</i> into memory, and we then apply operation <i>sort</i> and <i>rev</i>
+  to the data read from file <i>e</i> on the SD card!
 
 </div>
-
+<hr>
 <div class="container" id="design">
 <h2>Design</h2>
 <small><a href="#desinterface">Block Diagram</a> | <a href="#desconnections">Connections</a> | <a href="#descomm">Communication</a> | <a href="#dessound">Sound</a> | <a href="#desdiff">Difficulties &amp; Choices</a></small> <br>
