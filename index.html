@@ -56,6 +56,22 @@
 <p>The project uses the Pancake stack CPU to handle the high-level computations and tasks. Thus, one of the results of our work on this project was several new functions that can be added to programs written for Pancake. The project also includes some preliminary work interfacing the FPGA with the on-board SD card, without using Nios II or C. We have compiled a list of the new features that we implemented, which we believe may be helpful to future students. This list is found in the <a href="#confeatures">Useful Features</a> section of this page.</p>
 
 </div> <!-- End of Intro div -->
+<div class="container" id="interface">
+  <h2>Interface</h2>
+  Our primary interaction with the Pancake stack CPU is through the keyboard. We implemented
+  a command line interface to take in commands. The interface is able to interpret 
+  3 main groups of commands: arithmetic calculations, file system access, and array operations.
+  <h4>Arithmetic Calculations</h4>
+  Arithmetic calculations is launched through typing in the command <i>calc</i>, then followed by
+  the arithmetic operations. We use reverse Polish notation for the operations. The
+  supported operations are addition, subtraction, multiplication, division, and modular.
+  <figure>
+  <img src="files/calculation_demo.png" alt="arithmetic operation demo" width="150">
+  <figcaption>Arithmetic operation demo</figcaption>
+  </figure>
+
+  <h4>File System Access</h4>
+</div>
 
 <div class="container" id="design">
 <h2>Design</h2>
@@ -291,6 +307,14 @@ language library. We have also implemented functions that are specific to our pr
   <img src="files/calculator_fsm.png" alt="calculator fsm" width="700">
   <figcaption>FSM of Calculator</figcaption>
   </figure>
+  Upon receiving the commands <i>calc</i> in the command line, the calculator FSM 
+  will be triggered. The calculator then parses the commands to perform arithmetic
+  operations. We used reverse polish notation for the calculator. For example, <i>2*4</i> will
+  be represented by <i> 2 4 *</i> on the command line. Our calculator supports addition, subtraction,
+  multiplication, integer division, modular, and exponentiation operation. Our calculator is able
+  to take in operands with multiple digits. However, it currently does not support 
+  negative numbers, decimals or fractions. Another extension for this calculator would be to
+  take in, create and perform computation on variables. 
 
 </p>
 
