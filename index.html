@@ -59,12 +59,10 @@
 <div class="container" id="interface">
   <h2>Interface</h2>
   Our primary interaction with the Pancake stack CPU is through the keyboard. We implemented
-  a command line interface to take in commands. The interface is able to interpret 
-  3 main groups of commands: arithmetic calculations, file system access, and array operations.
+  a command line interface to take in commands. The interface is able to interpret
+  three main groups of commands: arithmetic calculations, file system access, and array operations.
   <h4>Arithmetic Calculations</h4>
-  Arithmetic calculations is launched through typing in the command <i>calc</i>, then followed by
-  the arithmetic operations. We use reverse Polish notation for the operations. The
-  supported operations are addition, subtraction, multiplication, division, and modular.
+  <p>Arithmetic calculations is launched through typing in the command <i>calc</i>, then followed by the arithmetic operations. We use reverse Polish notation for the operations. Thesupported operations are addition, subtraction, multiplication, division, and modular.</p>
   <figure>
   <img src="files/calculation_demo.png" alt="arithmetic operation demo" width="150">
   <figcaption>Arithmetic operation demo</figcaption>
@@ -100,6 +98,7 @@
   to read the content of file <i>a</i>. We then type <i>rm a</i> to remove <i>a</i> from the
   SD card. <i>ls</i> again to show that <i>a</i> has indeed been removed.
 
+
 </div>
 
 <div class="container" id="design">
@@ -114,7 +113,10 @@
 </figure>
 
 <br/><h3 id="desconnections">Connections</h3>
-<p></p>
+<figure>
+<img src="files/connections.png" alt="Photograph of connections to the development board" width="700">
+<figcaption>Photograph of connections to the development board</figcaption>
+</figure>
 
 <br/><h3 id="descomm">Communication</h3>
 <p>TODO: talk about things like PS/2, VGA, etc.</p>
@@ -221,7 +223,7 @@ power (exponential) function is implemented using multiplication.
 
 <b>bubble_sort</b>: <i> perform bubble sort on an array in ascending order</i> <br>
   The bubble sort algorithm we implemented is a very standard bubble sort
-  algorithm. In particular, our pancake version of the bubble sort is based
+  algorithm. In particular, our Pancake version of the bubble sort is based
   on this <a href="http://www.java-examples.com/java-bubble-sort-example">one</a>:
 <xmp>pseudo-code:
   bubble_sort(int[] array, int array_len)
@@ -312,8 +314,7 @@ power (exponential) function is implemented using multiplication.
 </xmp>
 
 <h4>Function Specific to the Command Line Interface </h4>
-In addition to those functions that could become an extension to the pancake programming
-language library. We have also implemented functions that are specific to our project.
+<p>In addition to those functions that could become an extension to the Pancake programming language library, we have also implemented functions that are specific to our project.</p>
   <ul>
     <li><i>calculator           </i>: interactive calculator through the command line.</li>
     <li><i>clear_screen         </i>: clear the content on the command line screen and start the cursor from the top of the screen    </li>
@@ -331,34 +332,28 @@ language library. We have also implemented functions that are specific to our pr
 
   </ul>
   <h4>Calculator</h4>
-  The interactive command line calculator implements a FSM to interpret the commands from the user.                 
+  The interactive command line calculator implements a FSM to interpret the commands from the user.
   <figure>
   <img src="files/calculator_fsm.png" alt="calculator fsm" width="700">
   <figcaption>FSM of Calculator</figcaption>
   </figure>
-  Upon receiving the commands <i>calc</i> in the command line, the calculator FSM 
+  Upon receiving the commands <i>calc</i> in the command line, the calculator FSM
   will be triggered. The calculator then parses the commands to perform arithmetic
   operations. We used reverse polish notation for the calculator. For example, <i>2*4</i> will
   be represented by <i> 2 4 *</i> on the command line. Our calculator supports addition, subtraction,
   multiplication, integer division, modular, and exponentiation operation. Our calculator is able
-  to take in operands with multiple digits. However, it currently does not support 
+  to take in operands with multiple digits. However, it currently does not support
   negative numbers, decimals or fractions. Another extension for this calculator would be to
-  take in, create and perform computation on variables. 
-
+  take in, create and perform computation on variables.
 </p>
 
-  <li><b>Shela? expand on the functions</b><i>parse_file_cmd       </i>: implements the command <i>ls</i>, which reveals what files are on the SD card </li>              
-  <li><b>Shela? expand on the functions</b><i>read_sd              </i>: read the content of a file contained on the SD card into the memory</li>       
-  <li><b>Shela? expand on the functions</b><i>read_byte_sd         </i>: read a single byte from the SD card at a specific address</li>            
-  <li><b>Shela? expand on the functions</b><i>write_sd             </i>: create and write a file to the SD card</li>        
-  <li><b>Shela? expand on the functions</b><i>write_byte_sd    </i>: write a single byte to the SD card at a specific address</li>    
+<h4>File System-Related Functions</h4>
 
-<h5>Accepting User Input</h5>
-<p></p>
-
-<h5>Parsing User Input</h5>
-<p></p>
-
+<li><i>parse_file_cmd       </i>: implements the command <i>ls</i>, which reveals what files are on the SD card </li>
+<li><i>read_sd              </i>: read the content of a file contained on the SD card into the memory</li>
+<li><i>read_byte_sd         </i>: read a single byte from the SD card at a specific address</li>
+<li><i>write_sd             </i>: create and write a file to the SD card</li>
+<li><i>write_byte_sd    </i>: write a single byte to the SD card at a specified address</li>
 
 <h5>File System</h5>
 <p></p>
@@ -374,20 +369,20 @@ language library. We have also implemented functions that are specific to our pr
 <p></p> @Richard
 
 <h5>SD Card Controller</h5>
-<p></p>
+<p></p> @Shela
 
 <br/><h4 id="desdiff">Design Difficulties and Choices</h4>
 <p></p>
 
 <h5>Minimizing Code Size</h5>
-<p></p>
+<p>The maximum code size for a Pancake program is 0xFFF, or 4095 lines/operations. If a program gets any bigger than that, it will not be possible to load the program onto the FPGA. Our software deals with many cases and performs many functions, so at times we struggled keeping our code size under this limit so that we could continue with our project.</p>
+<p>In some cases, this meant sacrificing certain fun but not completely necessary features. In other cases, it mean streamlining our code or moving parts of the software into hardware, when possible. For example, originally we mapped the keyboard scan codes to ASCII values within the Pancake code. However, to cut down on code size, we moved this function to a hardware look-up table, which took the form of a module in our Verilog code.</p>
 
 <h5>Minimizing Input/Output Ports</h5>
 <p>Once it is instantiated by an upper module, the "minicpu" module provided by Bruce represents the Pancake CPU and its input and output ports. One important thing to remember when using this module is that it has limited input and output ports &mdash; eight of each. Thus, one aspect of our design that we had to manage was what data we were sending in and out of the CPU so that we would not run out of ports. We originally based our initial code on Bruce's <a href="http://people.ece.cornell.edu/land/courses/ece5760/DE2/TinyCPU/Stack_machine_2013/VGA_sram_3cpu_2013.v" target="_blank">3 CPU Example</a>. Since we only needed one CPU, we found that after removing two of the three in the example, we could in fact free up several ports.</p>
-@Shela
 
 <h5>Multiple Key-Presses</h5>
-<p></p> @Shela or Richard
+<p>One small issue that we encountered early on in this project's development was the problem of differentiating multiple key presses of the same key. For example, if we only had one input to the Pancake CPU that contained the code for the key that was just pressed, we could have a hard time knowing if that key was just pressed once or pressed multiple times beforehand. Our solution was to have a flag called "toggle" that toggled between 1 and 0 whenever a key on the keyboard was pressed. This toggle flag was input into the Pancake, which kept two variables: toggle and toggle_prev. On each iteration of the main while-loop, the program checked if toggle and toggle_prev were different. If they were, then a new key on the keyboard must have been pressed; otherwise, no key was pressed.</p>
 
 </div> <!-- end of Design div -->
 
@@ -439,7 +434,7 @@ language library. We have also implemented functions that are specific to our pr
 <li>Run the Assembler by selecting Processing > Start > Start Assembler.
 <li>Program the FPGA.
 </ol>
-<p>Luckily, a full compile of the HDL is usually not required if the only changes were in the .cmp file; however, we decided to simplify steps 2 through 4 of this process by creating a <b>Windows</b> batch script called pancake_compile.bat. <!-- @SHELA TODO: Include link to the script here. --></p>
+<p>Luckily, a full compile of the HDL is usually not required if the only changes were in the .cmp file; however, we decided to simplify steps 2 through 4 of this process by creating a <b>Windows</b> batch script called Pancake_compile.bat. <!-- @SHELA TODO: Include link to the script here. --></p>
 <p>A small amount of setup is required to use this script:</p>
 <ol>
 <li>Find the "Quartus bin" directory on your computer. On the lab computers, this is C:/altera/11.0/quartus/bin.
@@ -452,10 +447,10 @@ language library. We have also implemented functions that are specific to our pr
 
 After this initial setup, reprogramming the FPGA after modifying the .cmp file is as follows:
 <ol>
-<li>Ensure the pancake_program.bat file and the .cmp file for your project are in the same directory.
+<li>Ensure the Pancake_program.bat file and the .cmp file for your project are in the same directory.
 <li>Navigate the Command Prompt to the directory that holds the .bat file.
 <li>Compile the Pancake program using Bruce's MATLAB compiler.
-<li>Enter into the Command Prompt "pancake_program.bat" (without quotes).
+<li>Enter into the Command Prompt "Pancake_program.bat" (without quotes).
 <li>Your new software should now be on the FPGA!
 <li>Repeat steps 3-5 as necessary.
 </ol>
