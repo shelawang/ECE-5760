@@ -8,7 +8,7 @@
   <link href="files/bootstrap.css" rel="stylesheet">
   <script src="files/ie-emulation-modes-warning.js"></script>
 
-  <title>FPGA Command Line Interface | ECE 5760</title>
+  <title>Re-inventing the PC: FPGA Command Line Interface | ECE 5760</title>
 </head>
 
 <body>
@@ -54,9 +54,69 @@
 </figure>
 
 <p>The project uses the Pancake stack CPU to handle the high-level computations and tasks. Thus, one of the results of our work on this project was several new functions that can be added to programs written for Pancake. The project also includes some preliminary work interfacing the FPGA with the on-board SD card, without using Nios II or C. We have compiled a list of the new features that we implemented, which we believe may be helpful to future students. This list is found in the <a href="#confeatures">Useful Features</a> section of this page.</p>
-
+<hr>
 </div> <!-- End of Intro div -->
+<div class="container" id="interface">
+  <h2>Interface</h2>
+  Our primary interaction with the Pancake stack CPU is through the keyboard. We implemented
+  a command line interface to take in commands. The interface is able to interpret
+  three main groups of commands: arithmetic calculations, file system access, and array operations.
+  <h4>Arithmetic Calculations</h4>
+  <p>Arithmetic calculations is launched through typing in the command <i>calc</i>, then followed by the arithmetic operations. We use reverse Polish notation for the operations. Thesupported operations are addition, subtraction, multiplication, division, and modular.</p>
+  <figure>
+  <img src="files/calculation_demo.png" alt="arithmetic operation demo" width="150">
+  <figcaption>Arithmetic operation demo</figcaption>
+  </figure>
 
+  <h4>Array Operations</h4>
+  We implemented various array operations to demonstrate that our system has
+  some support for data structures. Many of the array operations also intend to be
+  an addition to the Pancake programming language. The array operations that are
+  supported are: <i>new(), max(), min(), reverse(), sort() </i>. <br>
+  We could directly perform these array operations on a new array entered through the
+  command line or on an array that is stored in the system variable <i>array</i>,
+  which holds the array that was just referenced to using any of the
+  array operations. The array operations work both on integers and chars, since we
+  look at the ASCII values of the array element to perform sort, max, and min operations.
+  The format of each array element is only in 8 bit chars. Thus, our system does not support double digit
+  numbers for the array.
+  <figure>
+  <img src="files/array_operation.png" alt="array operation demo" width="300">
+  <figcaption>array operation demo</figcaption>
+  </figure>
+  In the figure above, we see that <i>new(1 5 9 2 1)</i> creates a new array based on
+  the input from the command line, the array is stored into variable <i>array</i> in SRAM.
+  <i>sort</i> operation directly sorts the array that is already stored in memory.
+  Similary, <i>max</i> and <i>min</i> finds the max and min element in that array respectively and <i>rev(3 5 4)</i> 
+  reverses the array and becomes 4 5 3.
+
+  <h4>File System Access</h4>
+  We implemented commands <i>ls</i>, <i>cat</i>, <i>rm</i> and <i>mk</i> to interact with the file system.
+  <ul>
+    <li> <i>ls</i> list all the files that exist on the file system--stored on the SD card.</li>
+    <li>  <i>cat &ltfile name&gt </i>displays the content of a the file.</li>
+    <li><i>mk &ltfile name&gt &ltfile content&gt</i> creates a new file named &ltfile name&gt with content &ltfile content&gt </li> stored to the SD card.</li>
+    <li><i>rm &ltfile name&gt</i> removes the file from SD card</li>
+  </ul>
+
+  <figure>
+  <img src="files/file_system_demo.png" alt="file system demo" width="150">
+  <figcaption>File system demo</figcaption>
+  </figure>
+  The figure above shows file system access. The first command <i>ls</i> reveals
+  all the files that are currently avaliable on the SD card. <i>mk a hello</i>
+  creates a new file with content <i>hello</i>. We type in the command <i>ls</i> again
+  to show that file <i>a</i> indeed exists on the SD drive. We then <i>cat a</i>
+  to read the content of file <i>a</i>. We then type <i>rm a</i> to remove <i>a</i> from the
+  SD card. <i>ls</i> again to show that <i>a</i> has indeed been removed. <br>
+  Additionally, the <i>cp</i> command copies the array that was recently read from the SD card to
+  the variable <i>array</i> in memory (SRAM) so that we can perform array operations on
+  data from the file system. In the figure above, we see that <i>cat e</i> and <i>cp</i>
+  copies string <i>ece5760</i> into memory, and we then apply operation <i>sort</i> and <i>rev</i>
+  to the data read from file <i>e</i> on the SD card!
+
+</div>
+<hr>
 <div class="container" id="design">
 <h2>Design</h2>
 <small><a href="#desinterface">Block Diagram</a> | <a href="#desconnections">Connections</a> | <a href="#descomm">Communication</a> | <a href="#dessound">Sound</a> | <a href="#desdiff">Difficulties &amp; Choices</a></small> <br>
@@ -69,10 +129,10 @@
 </figure>
 
 <br/><h3 id="desconnections">Connections</h3>
-<p></p>
-
-<br/><h3 id="descomm">Communication</h3>
-<p>TODO: talk about things like PS/2, VGA, etc.</p>
+<figure>
+<img src="files/connections.png" alt="Photograph of connections to the development board" width="700">
+<figcaption>Photograph of connections to the development board</figcaption>
+</figure>
 
 <hr>
 <br/><h3 id="dessoftware">Software</h3>
@@ -176,7 +236,7 @@ power (exponential) function is implemented using multiplication.
 
 <b>bubble_sort</b>: <i> perform bubble sort on an array in ascending order</i> <br>
   The bubble sort algorithm we implemented is a very standard bubble sort
-  algorithm. In particular, our pancake version of the bubble sort is based
+  algorithm. In particular, our Pancake version of the bubble sort is based
   on this <a href="http://www.java-examples.com/java-bubble-sort-example">one</a>:
 <xmp>pseudo-code:
   bubble_sort(int[] array, int array_len)
@@ -267,8 +327,7 @@ power (exponential) function is implemented using multiplication.
 </xmp>
 
 <h4>Function Specific to the Command Line Interface </h4>
-In addition to those functions that could become an extension to the pancake programming
-language library. We have also implemented functions that are specific to our project.
+<p>In addition to those functions that could become an extension to the Pancake programming language library, we have also implemented functions that are specific to our project.</p>
   <ul>
     <li><i>calculator           </i>: interactive calculator through the command line.</li>
     <li><i>clear_screen         </i>: clear the content on the command line screen and start the cursor from the top of the screen    </li>
@@ -286,55 +345,61 @@ language library. We have also implemented functions that are specific to our pr
 
   </ul>
   <h4>Calculator</h4>
-  The interactive command line calculator implements a FSM to interpret the commands from the user.                 
+  The interactive command line calculator implements a FSM to interpret the commands from the user.
   <figure>
   <img src="files/calculator_fsm.png" alt="calculator fsm" width="700">
   <figcaption>FSM of Calculator</figcaption>
   </figure>
-
+  Upon receiving the commands <i>calc</i> in the command line, the calculator FSM
+  will be triggered. The calculator then parses the commands to perform arithmetic
+  operations. We used reverse polish notation for the calculator. For example, <i>2*4</i> will
+  be represented by <i> 2 4 *</i> on the command line. Our calculator supports addition, subtraction,
+  multiplication, integer division, modular, and exponentiation operation. Our calculator is able
+  to take in operands with multiple digits. However, it currently does not support
+  negative numbers, decimals or fractions. Another extension for this calculator would be to
+  take in, create and perform computation on variables.
 </p>
 
-  <li><b>Shela? expand on the functions</b><i>parse_file_cmd       </i>: implements the command <i>ls</i>, which reveals what files are on the SD card </li>              
-  <li><b>Shela? expand on the functions</b><i>read_sd              </i>: read the content of a file contained on the SD card into the memory</li>       
-  <li><b>Shela? expand on the functions</b><i>read_byte_sd         </i>: read a single byte from the SD card at a specific address</li>            
-  <li><b>Shela? expand on the functions</b><i>write_sd             </i>: create and write a file to the SD card</li>        
-  <li><b>Shela? expand on the functions</b><i>write_byte_sd    </i>: write a single byte to the SD card at a specific address</li>    
+<h4>File System-Related Functions</h4>
 
-<h5>Accepting User Input</h5>
-<p></p>
-
-<h5>Parsing User Input</h5>
-<p></p>
-
+<li><i>parse_file_cmd       </i>: implements the command <i>ls</i>, which reveals what files are on the SD card </li>
+<li><i>read_sd              </i>: read the content of a file contained on the SD card into the memory</li>
+<li><i>read_byte_sd         </i>: read a single byte from the SD card at a specific address</li>
+<li><i>write_sd             </i>: create and write a file to the SD card</li>
+<li><i>write_byte_sd    </i>: write a single byte to the SD card at a specified address</li>
 
 <h5>File System</h5>
-<p></p>
-@Shela talk about valid bytes/bits
+<p>The file system uses the functions mentioned above to read and write from the SD card. We decided that, to simplify the system, file names would only consist of one letter, allowing for 26 possible files. The SD card that we used had a capacity of 32 MB, or approximately 60,000 512-byte sectors. As discussed in more detail later in this document (see <a href="#sdctrl">Useful Features - SD Card Controller</a>), our system only implemented reads and writes at the sector-level, rather than the byte-level, leaving us with approximately 60,000 spots to read and write on the SD card. To fit our intended 26 files, we decided to set a fixed size of 2000 bytes maximum for each file. We believed that this would be sufficient for the purposes of our computer, which only has limited text-editing capabilities, anyway.</p>
+<p>When a file is to be written, the first byte of the file is written as a 1, to show that it is valid. This scheme works because when an SD card is formatted clean, every sector of the card is set to 0, except for the 0th (first) sector. This sector is reserved, so we actually started our first file (file 'a') at the 200th sector, rather than the 1st sector, to avoid writing over this reserved space.</p>
+<p>Once the first "valid" byte is written, then the rest of the bytes of the file are written. After that, an "end of file" byte is written to the sector immediately following the last character of the file. We chose 3 for this purpose. (In fact, 3 represents "end of text" in ASCII notation.)</p>
+<p>Reading a file simply follows this format. First, the 0th byte of the file is read: If it is 1, then the system continues reading the rest of the file. Otherwise, the file is not valid, and the system does nothing. Then each byte is read and printed to the VGA monitor as it is read. When the "end of file" byte is read (3, in our cases), then the reading stops.</p>
+<p>A very helpful tool that we found when trying to test the write capabilities of the system was <a href="http://mh-nexus.de/en/hxd/" target="_blank">HxD - Freeware Hex and Disk Editor</a>. This tool allows you to read the raw hex data that is on an SD card plugged into your computer, so you can see whether or not your writes are successful.
 
 <br/><h4 id="deshardware">Hardware</h4>
 <p></p>
 
 <h5>Keyboard Controller</h5>
-<p></p>
+<p></p> @Shela?
 
 <h5>Keyboard Scan Code Look-up Table</h5>
-<p></p> @Richard
+<p>As discussed in the section below, <a href="#desdiff">Design Difficulties</a>, one way that we decreased the code size of our Pancake program was by moving the keyboard scan-code to ASCII look-up from the Pancake code to a hardware module in Verilog. The look-up module takes three inputs: a keyboard scan-code, a "shift" flag, and a "caps lock" flag. The latter two are simply 1 if shift or caps lock is pressed, respectively, or 0 if not pressed. The output of the module is an 8-bit ASCII number that corresponds to the letter that was pressed on the keyboard. For example, the keyboard scan-code of the letter A is 173, while the ASCII representation of A is 97 for lowercase and 65 for uppercase. Say that the user hits the A key on the keyboard. If caps lock or shift is pressed (i.e., one of these inputs is 1), then the output of the module would be 97; otherwise, the output is 65. This value goes straight to an input on the Pancake minicpu module, where it can be used by the Pancake program.</p>
 
 <h5>SD Card Controller</h5>
-<p></p>
+<p>The SD card controller that we used was implemented completely in Verilog and was found in Theo Engel's <a href="http://www.theoengel.nl/P8/index.html" target="_blank">P856 Minicomputer</a> project. The Verilog module for this controller is located at <a href="http://www.theoengel.nl/ddpx16/archive/p800-fpga/p8-01/sd_card3.v" target="_blank">sd_card3.v</a> Further discussion on how we used this module can be found later in this document, in <a href="#sdctrl">Useful Features - SD Card Controller</a>.
+</p>
 
 <br/><h4 id="desdiff">Design Difficulties and Choices</h4>
 <p></p>
 
 <h5>Minimizing Code Size</h5>
-<p></p>
+<p>The maximum code size for a Pancake program is 0xFFF, or 4095 lines/operations. If a program gets any bigger than that, it will not be possible to load the program onto the FPGA. Our software deals with many cases and performs many functions, so at times we struggled keeping our code size under this limit so that we could continue with our project.</p>
+<p>In some cases, this meant sacrificing certain fun but not completely necessary features. In other cases, it mean streamlining our code or moving parts of the software into hardware, when possible. For example, originally we mapped the keyboard scan codes to ASCII values within the Pancake code. However, to cut down on code size, we moved this function to a hardware look-up table, which took the form of a module in our Verilog code.</p>
 
 <h5>Minimizing Input/Output Ports</h5>
 <p>Once it is instantiated by an upper module, the "minicpu" module provided by Bruce represents the Pancake CPU and its input and output ports. One important thing to remember when using this module is that it has limited input and output ports &mdash; eight of each. Thus, one aspect of our design that we had to manage was what data we were sending in and out of the CPU so that we would not run out of ports. We originally based our initial code on Bruce's <a href="http://people.ece.cornell.edu/land/courses/ece5760/DE2/TinyCPU/Stack_machine_2013/VGA_sram_3cpu_2013.v" target="_blank">3 CPU Example</a>. Since we only needed one CPU, we found that after removing two of the three in the example, we could in fact free up several ports.</p>
-@Shela
 
 <h5>Multiple Key-Presses</h5>
-<p></p> @Shela or Richard
+<p>One small issue that we encountered early on in this project's development was the problem of differentiating multiple key presses of the same key. For example, if we only had one input to the Pancake CPU that contained the code for the key that was just pressed, we could have a hard time knowing if that key was just pressed once or pressed multiple times beforehand. Our solution was to have a flag called "toggle" that toggled between 1 and 0 whenever a key on the keyboard was pressed. This toggle flag was input into the Pancake, which kept two variables: toggle and toggle_prev. On each iteration of the main while-loop, the program checked if toggle and toggle_prev were different. If they were, then a new key on the keyboard must have been pressed; otherwise, no key was pressed.</p>
 
 </div> <!-- end of Design div -->
 
@@ -378,7 +443,7 @@ language library. We have also implemented functions that are specific to our pr
   <ul>
   <li>
   </ul>
-<h5>Pancake compilation script</h5>
+<h5>Pancake re-programming script</h5>
 <p>After making changes to the .cmp file in which the Pancake code is written, a multi-step process needs to be completed before the new code can be programmed onto the FPGA. The steps are as follows:</p>
 <ol>
 <li>Compile the Pancake code using Bruce Land's Syrup compiler in MATLAB.
@@ -386,7 +451,7 @@ language library. We have also implemented functions that are specific to our pr
 <li>Run the Assembler by selecting Processing > Start > Start Assembler.
 <li>Program the FPGA.
 </ol>
-<p>Luckily, a full compile of the HDL is usually not required if the only changes were in the .cmp file; however, we decided to simplify steps 2 through 4 of this process by creating a <b>Windows</b> batch script called pancake_compile.bat. <!-- @SHELA TODO: Include link to the script here. --></p>
+<p>Luckily, a full compile of the HDL is usually not required if the only changes were in the .cmp file; however, we decided to simplify steps 2 through 4 of this process by creating a <b>Windows</b> batch script called Pancake_compile.bat. <!-- @SHELA TODO: Include link to the script here. --></p>
 <p>A small amount of setup is required to use this script:</p>
 <ol>
 <li>Find the "Quartus bin" directory on your computer. On the lab computers, this is C:/altera/11.0/quartus/bin.
@@ -399,15 +464,15 @@ language library. We have also implemented functions that are specific to our pr
 
 After this initial setup, reprogramming the FPGA after modifying the .cmp file is as follows:
 <ol>
-<li>Ensure the pancake_program.bat file and the .cmp file for your project are in the same directory.
+<li>Ensure the Pancake_program.bat file and the .cmp file for your project are in the same directory.
 <li>Navigate the Command Prompt to the directory that holds the .bat file.
 <li>Compile the Pancake program using Bruce's MATLAB compiler.
-<li>Enter into the Command Prompt "pancake_program.bat" (without quotes).
+<li>Enter into the Command Prompt "Pancake_program.bat" (without quotes).
 <li>Your new software should now be on the FPGA!
 <li>Repeat steps 3-5 as necessary.
 </ol>
 
-<h5>SD Card controller</h5>
+<h5 id="sdctrl">SD Card controller</h5>
 <p>Using a Verilog implementation of an SD card controller that we discovered online (see <a href="#references">References</a>), we were able to passably read and write an SD card using only Verilog (i.e., without using Nios II).</p>
 <p>It is worth noting that in our implementation, a single "write" to the SD card in fact writes an entire 512-byte block, or "sector," of the SD card. Meanwhile, a "read" from the SD card reads the entire 512 bytes of a block but only keeps the last byte to display on the monitor. This scheme results in passable but certainly not optimal file accesses, and future work done using this SD card controller could include research into how to improve reads and writes.</p>
 <p>Also note that the SD card controller may only reliably work with SD cards with storage capacity below 2 GB, as SD cards with more than 2 GB (high-capacity cards) require a different initialization sequence that is not handled in the controller used in this project.</p>
@@ -532,7 +597,7 @@ After this initial setup, reprogramming the FPGA after modifying the .cmp file i
 </center></p><br/>
 
 <h5>Keyboard scan-code to ASCII look-up table</h5>
-<p></p>
+<p>As discussed in <a href="#deshardware">Hardware</a>, we implemented a keyboard scan-code to ASCII look-up table, as a Verilog module. While such a module is not necessarily difficult to implement, we hope that having our work available will save future students some time.</p>
 
 
 <br><h4 id="constandards">Conformity to Standards</h4>
@@ -569,7 +634,8 @@ After this initial setup, reprogramming the FPGA after modifying the .cmp file i
 <div class="container" id="appendix">
 <h3>Appendix</h3>
 <br><h4>Code</h4>
-TODO
+<p>The entire Quartus II project for this project, along with the .cmp file in which the Pancake program is written, as well as the pancake_program.bat script mentioned above, is included in this .zip file:</p>
+<p><center><b><a href="FPGA_CLI.zip">Download FPGA_CLI.zip</a></b></center></p>
 
 <br><h4>Parts List</h4>
 <p><ul>
