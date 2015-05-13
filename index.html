@@ -407,12 +407,16 @@ power (exponential) function is implemented using multiplication.
 
 <div class="container" id="results">
 <h3>Results</h3>
-<small><a href="#resspeed">Speed/Accuracy</a> | <a href="#ressafety">Safety</a> | <a href="#resusability">Usability</a></small><br>
-
-<br><h4 id="resspeed">Speed and Accuracy</h4>
+<br>
 
 <h5>Calculations</h5>
-<p></p>
+<p>
+  Our calculator is able to correctly calculate arithmetic operations accurately.
+  However, one bug that we have not been able to fix is when the operands have more than
+  two digits. The state machine of the calculator technically supports multiple digits, but in reality
+  the operands cannot be more than two digits. This is a bug that
+  we have not been able to figure it out.
+</p>
 
 <h5>File System</h5>
 <p></p>
@@ -441,24 +445,21 @@ power (exponential) function is implemented using multiplication.
 
 <h5>New Pancake functions</h5>
 <p>
-  As mentioned above in the <i>software</i> section. The functions that we could be useful to the Pancake library include:
+  As mentioned above in the <a href="#dessoftware">Software</a> section, some new functions that could be useful to the Pancake library include:
   <ul>
-    <li><i>itoa</i>: printing number to vga in decimal format</li>
+    <li><i>itoa</i>: printing number to VGA in decimal format</li>
     <li><i>mod</i>: modular operation</li>
     <li><i>div</i>: integer division</li>
     <li><i>power</i>: exponentiation operation</li>
     <li><i>bubble_sort</i>: perform bubble sort on an array in ascending order</li>
-    <li><i>print_array</i>: printing an array to vga</li>
+    <li><i>print_array</i>: printing an array to VGA</li>
     <li><i>max</i>: return the max of an array</li>
     <li><i>min</i>: return the min of an array</li>
     <li><i>reverse</i>: reverse an array</li>
   </ul>
-
-
 </p>
- 
-<h5>Pancake compilation script</h5>
 
+<h5>Pancake re-programming script</h5>
 <p>After making changes to the .cmp file in which the Pancake code is written, a multi-step process needs to be completed before the new code can be programmed onto the FPGA. The steps are as follows:</p>
 <ol>
 <li>Compile the Pancake code using Bruce Land's Syrup compiler in MATLAB.
@@ -466,7 +467,7 @@ power (exponential) function is implemented using multiplication.
 <li>Run the Assembler by selecting Processing > Start > Start Assembler.
 <li>Program the FPGA.
 </ol>
-<p>Luckily, a full compile of the HDL is usually not required if the only changes were in the .cmp file; however, we decided to simplify steps 2 through 4 of this process by creating a <b>Windows</b> batch script called Pancake_compile.bat. <!-- @SHELA TODO: Include link to the script here. --></p>
+<p>Luckily, a full compile of the HDL is usually not required if the only changes were in the .cmp file; however, we decided to simplify steps 2 through 4 of this process by creating a <b>Windows</b> batch script called <a href="files/pancake_program.bat">pancake_program.bat</a>.</p>
 <p>A small amount of setup is required to use this script:</p>
 <ol>
 <li>Find the "Quartus bin" directory on your computer. On the lab computers, this is C:/altera/11.0/quartus/bin.
@@ -657,7 +658,7 @@ We encode 128 specified characters into 7-bit binary integers using a hardware i
 <div class="container" id="appendix">
 <h3>Appendix</h3>
 <br><h4>Code</h4>
-<p>The entire Quartus II project for this project, along with the .cmp file in which the Pancake program is written, as well as the Pancake_program.bat script mentioned above, is included in this .zip file:</p>
+<p>The entire Quartus II project for this project, along with the .cmp file in which the Pancake program is written, as well as the <a href="files/pancake_program.bat">pancake_program.bat</a> script mentioned above, is included in this .zip file:</p>
 <p><center><b><a href="FPGA_CLI.zip">Download FPGA_CLI.zip</a></b></center></p>
 
 <br><h4>Parts List</h4>
