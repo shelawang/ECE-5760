@@ -68,7 +68,37 @@
   <figcaption>Arithmetic operation demo</figcaption>
   </figure>
 
-  <h4>File System Access</h4> @Shela
+  <h4>Array Operations</h4>
+  We implemented various array operations to demonstrate that our system has 
+  some support for data structures. Many of the array operations also intend to be
+  an addition to the Pancake programming language. The array operations that are 
+  supported are: <i>new(), max(), min(), reverse(), sort() </i>. <br>
+  We could directly perform these array operations on a new array entered through the
+  command line or on an array that is stored in the system variable <i>array</i>,
+  which holds the array that was just referenced to using any of the
+  array operations.
+
+  <h4>File System Access</h4>
+  We implemented commands <i>ls</i>, <i>cat</i>, <i>rm</i> and <i>mk</i> to interact with the file system.
+  <ul>
+    <li> <i>ls</i> list all the files that exist on the file system--stored on the SD card.</li>
+    <li>  <i>cat &ltfile name&gt </i>displays the content of a the file.</li>
+    <li><i>mk &ltfile name&gt &ltfile content&gt</i> creates a new file named &ltfile name&gt with content &ltfile content&gt </li> stored to the SD card.</li>
+    <li><i>rm &ltfile name&gt</i> removes the file from SD card</li>
+  </ul>
+
+  <figure>
+  <img src="files/file_system_demo.png" alt="file system demo" width="150">
+  <figcaption>File system demo</figcaption>
+  </figure>
+  The figure above shows file system access. The first command <i>ls</i> reveals
+  all the files that are currently avaliable on the SD card. <i>mk a hello</i> 
+  creates a new file with content <i>hello</i>. We type in the command <i>ls</i> again
+  to show that file <i>a</i> indeed exists on the SD drive. We then <i>cat a</i>
+  to read the content of file <i>a</i>. We then type <i>rm a</i> to remove <i>a</i> from the
+  SD card. <i>ls</i> again to show that <i>a</i> has indeed been removed.
+
+
 </div>
 
 <div class="container" id="design">
